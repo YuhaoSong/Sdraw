@@ -15,6 +15,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_actionLine_toggled(bool arg1);
+
 private:
     Ui::MainWindow *ui;
 };

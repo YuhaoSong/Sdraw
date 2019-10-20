@@ -5,14 +5,16 @@
 #include <QOpenGLFunctions>
 #include <QVector>
 #include <Qdebug>
-enum State{freeedit, line, circle, rectangle, ellipse};
+#include <QMouseEvent>
+enum Mode{freeedit, line, circle, rectangle, ellipse};
 struct Point//every pixel
 {
     int x;
     int y;
-    int color[3];
+    double color[3];
     bool choosen;
     int pid;
+    Mode mode;
 
 };
 class GraphLibrary : public QOpenGLWidget,protected QOpenGLFunctions
@@ -21,18 +23,27 @@ class GraphLibrary : public QOpenGLWidget,protected QOpenGLFunctions
 public:
     GraphLibrary(QWidget *parent = nullptr);
     ~GraphLibrary();
-    void setMode(int mode);
+    void setMode(Mode mode);
+    void drawPoint(int x,int y);
+    void drawLine(int x1,int y1,int x2,int y2);
 protected:
     void paintGL() override;//refresh
     void initializeGL() override;//init
     void resizeGL(int w, int h) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
     //QOpenGLContext *m_context;
 private:
     QVector<Point> curboard;//all the points which means the mirror of the board
     QVector<Point> oldboard;//TODO: used in redo and undo
     int curcolor[3];// change color or something
-    State curstate;// make a shape
-    int mode;
+    Mode curmode;// make a shape
+    int curpid;
+    int start_x;
+    int start_y;
+    int end_x;
+    int end_y;
 
 };
 
