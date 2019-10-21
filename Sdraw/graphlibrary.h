@@ -6,7 +6,8 @@
 #include <QVector>
 #include <Qdebug>
 #include <QMouseEvent>
-enum Mode{freeedit, line, circle, rectangle, ellipse};
+//#include <GL/glu.h>
+enum Mode{choose,freeedit, line, circle, rectangle, ellipse};
 struct Point//every pixel
 {
     int x;
@@ -24,8 +25,18 @@ public:
     GraphLibrary(QWidget *parent = nullptr);
     ~GraphLibrary();
     void setMode(Mode mode);
+    void setSize(int size);
+
     void drawPoint(int x,int y);
     void drawLine(int x1,int y1,int x2,int y2);
+
+    void choose(int x,int y);
+    void unchoose();
+    void OPT_delete();
+    void OPT_rotate();
+    void OPT_move();
+    void OPT_scale();
+    void OPT_clip();
 protected:
     void paintGL() override;//refresh
     void initializeGL() override;//init
@@ -37,13 +48,16 @@ protected:
 private:
     QVector<Point> curboard;//all the points which means the mirror of the board
     QVector<Point> oldboard;//TODO: used in redo and undo
-    int curcolor[3];// change color or something
+    double curcolor[3];// change color or something
     Mode curmode;// make a shape
     int curpid;
     int start_x;
     int start_y;
     int end_x;
     int end_y;
+    int cursize;
+    bool ischoosen;
+    int choosenpid;
 
 };
 

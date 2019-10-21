@@ -18,6 +18,10 @@ public:
 private slots:
     void on_actionLine_toggled(bool arg1);
 
+    void on_actionLine_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

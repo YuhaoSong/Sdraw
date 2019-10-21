@@ -37,6 +37,11 @@ public:
     QAction *actionTool_bar;
     QAction *actionChoose;
     QAction *actionChoose_by_area;
+    QAction *actionDelete;
+    QAction *actionRotate;
+    QAction *actionScale;
+    QAction *actionClip;
+    QAction *actionMove;
     QWidget *centralwidget;
     GraphLibrary *openGLWidget;
     QMenuBar *menubar;
@@ -78,6 +83,16 @@ public:
         actionChoose->setObjectName(QString::fromUtf8("actionChoose"));
         actionChoose_by_area = new QAction(MainWindow);
         actionChoose_by_area->setObjectName(QString::fromUtf8("actionChoose_by_area"));
+        actionDelete = new QAction(MainWindow);
+        actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
+        actionRotate = new QAction(MainWindow);
+        actionRotate->setObjectName(QString::fromUtf8("actionRotate"));
+        actionScale = new QAction(MainWindow);
+        actionScale->setObjectName(QString::fromUtf8("actionScale"));
+        actionClip = new QAction(MainWindow);
+        actionClip->setObjectName(QString::fromUtf8("actionClip"));
+        actionMove = new QAction(MainWindow);
+        actionMove->setObjectName(QString::fromUtf8("actionMove"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new GraphLibrary(centralwidget);
@@ -118,6 +133,11 @@ public:
         menu_F->addAction(action_S);
         menu_E->addAction(actionUndo);
         menu_E->addAction(actionRedo);
+        menu_E->addAction(actionScale);
+        menu_E->addAction(actionDelete);
+        menu_E->addAction(actionRotate);
+        menu_E->addAction(actionClip);
+        menu_E->addAction(actionMove);
         menuOptions->addAction(actionCircle);
         menuOptions->addAction(actionLine);
         menuOptions->addAction(actionFree);
@@ -148,6 +168,14 @@ public:
         actionTool_bar->setText(QApplication::translate("MainWindow", "Tool bar", nullptr));
         actionChoose->setText(QApplication::translate("MainWindow", "Choose by point", nullptr));
         actionChoose_by_area->setText(QApplication::translate("MainWindow", "Choose by area", nullptr));
+        actionDelete->setText(QApplication::translate("MainWindow", "Delete", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionDelete->setShortcut(QApplication::translate("MainWindow", "Del", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionRotate->setText(QApplication::translate("MainWindow", "Rotate", nullptr));
+        actionScale->setText(QApplication::translate("MainWindow", "Scale", nullptr));
+        actionClip->setText(QApplication::translate("MainWindow", "Clip", nullptr));
+        actionMove->setText(QApplication::translate("MainWindow", "Move", nullptr));
         menu_F->setTitle(QApplication::translate("MainWindow", "File(&F)", nullptr));
         menu_E->setTitle(QApplication::translate("MainWindow", "Edit(&E)", nullptr));
         menuOptions->setTitle(QApplication::translate("MainWindow", "Insert", nullptr));

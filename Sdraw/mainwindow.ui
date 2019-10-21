@@ -57,6 +57,11 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="actionScale"/>
+    <addaction name="actionDelete"/>
+    <addaction name="actionRotate"/>
+    <addaction name="actionClip"/>
+    <addaction name="actionMove"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
@@ -151,6 +156,34 @@
   <action name="actionChoose_by_area">
    <property name="text">
     <string>Choose by area</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionRotate">
+   <property name="text">
+    <string>Rotate</string>
+   </property>
+  </action>
+  <action name="actionScale">
+   <property name="text">
+    <string>Scale</string>
+   </property>
+  </action>
+  <action name="actionClip">
+   <property name="text">
+    <string>Clip</string>
+   </property>
+  </action>
+  <action name="actionMove">
+   <property name="text">
+    <string>Move</string>
    </property>
   </action>
  </widget>

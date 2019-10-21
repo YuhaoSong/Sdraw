@@ -1,12 +1,16 @@
 #include "graphlibrary.h"
 #include <Qdebug>
+//#include <gl/glu.h>
+
 GraphLibrary::GraphLibrary(QWidget *parent )
 {
     curpid=0;
     curcolor[0]=1;
-    curcolor[1]=170/255;
+    curcolor[1]=0;
     curcolor[2]=0;
-    setMode(line);
+    ischoosen=false;
+    setMode(Mode::choose);
+    setSize(4);
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
@@ -21,20 +25,28 @@ GraphLibrary::~GraphLibrary()
 
 void GraphLibrary::setMode(Mode mode)
 {
+    qDebug()<<"SetMode"<<mode;
+    //unchoose();
     this->curmode=mode;
+}
+
+void GraphLibrary::setSize(int size)
+{
+    qDebug()<<"setsize";
+    this->cursize=size;
 }
 
 void GraphLibrary::drawPoint(int x, int y)
 {
     Point temp;
     temp.pid=curpid;
-    curpid++;
     temp.x=x;
     temp.y=y;
     temp.color[0]=curcolor[0];
     temp.color[1]=curcolor[1];
     temp.color[2]=curcolor[2];
     temp.mode=curmode;
+    temp.choosen=false;
     curboard.push_back(temp);
 }
 
@@ -71,6 +83,99 @@ void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
             y += b;
         h += 2 * dy;
     }
+    curpid++;
+}
+
+void GraphLibrary::choose(int x, int y)
+{
+    qDebug()<<"choose";
+    int temppid=-1;
+    for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+    {
+        if((abs(iter->x-x)<cursize)&&(abs(iter->y-y)<cursize))
+        {
+            temppid=iter->pid;
+            iter->choosen=true;
+            break;
+        }
+    }
+    if(temppid!=-1)
+    {
+        ischoosen=true;
+        choosenpid=temppid;
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+        {
+            if(iter->pid==temppid)
+            {
+                iter->choosen=true;
+            }
+        }
+    }
+    else
+    {
+        ischoosen=false;
+        unchoose();
+    }
+}
+
+void GraphLibrary::unchoose()
+{
+    qDebug()<<"unchoose";
+    for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+    {
+        if(iter->choosen==true)
+        {
+            iter->choosen=false;
+        }
+    }
+
+}
+
+void GraphLibrary::OPT_delete()
+{
+    if(ischoosen==true)
+    {
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+        {
+            if(iter->pid==choosenpid)
+            {
+                 curboard.erase(iter);
+                 iter--;
+            }
+        }
+    }
+}
+
+void GraphLibrary::OPT_rotate()
+{
+    if(ischoosen==true)
+    {
+
+    }
+}
+
+void GraphLibrary::OPT_move()
+{
+    if(ischoosen==true)
+    {
+
+    }
+}
+
+void GraphLibrary::OPT_scale()
+{
+    if(ischoosen==true)
+    {
+
+    }
+}
+
+void GraphLibrary::OPT_clip()
+{
+    if(ischoosen==true)
+    {
+
+    }
 }
 
 void GraphLibrary::paintGL()
@@ -80,20 +185,22 @@ void GraphLibrary::paintGL()
     for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
     {
        // qDebug()<<"x="<<iter->x<<" "<<"y="<<iter->y;
-        //glColor3d(iter->color[0],iter->color[1],iter->color[2]);
-        glColor3f(1.0,0.0,0.0);
+        if(iter->choosen==false)
+        {
+           // qDebug()<<"unchoose";
+            glColor3d(iter->color[0],iter->color[1],iter->color[2]);
+        }
+        else
+        {
+            qDebug()<<"chosen";
+            glColor3d(1,1,1);
+        }
+        glPointSize(cursize);
         glBegin(GL_POINTS);
-        glVertex3d(1.0f,1.0f,0);
+        glVertex3f(iter->x,this->size().height()-iter->y,0);
+      //  glVertex3f(iter->x,iter->y,0);
         glEnd();
     }
-    /*glBegin(GL_TRIANGLES); // 绘制三角形（逆时针画出来的三角形才是正面朝着我们的）
-        glColor3f(1.0,0.0,0.0);     // 设置当前色为红色
-        glVertex3f(-1.0,-1.0, 0.0); // 左下顶点（//glVertex 的第一个参数是X坐标，然后依次是Y坐标和Z坐标）
-        glColor3f(0.0,1.0,0.0);     // 设置当前色为绿色
-        glVertex3f( 1.0,-1.0, 0.0); // 右下顶点
-        glColor3f(0.0,0.0,1.0);     // 设置当前色为蓝色
-        glVertex3f( 0.0, 1.0, 0.0); // 上顶点
-      glEnd();*/
     update();
 }
 
@@ -107,32 +214,43 @@ void GraphLibrary::initializeGL()
 
 void GraphLibrary::resizeGL(int w, int h)
 {
-
-    qDebug()<<"resizeGL"<<endl;
-
+    qDebug()<<this->size().width();
+    qDebug()<<this->size().height();
+    glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glOrtho(0, this->size().width(), 0, this->size().height(), -1, 1);
 }
 
 void GraphLibrary::mousePressEvent(QMouseEvent *event)
 {
-    //qDebug()<<"mode="<<curmode;
+    qDebug()<<"mode="<<curmode;
     if(event->button()==Qt::LeftButton)
     {
         switch(curmode)
         {
-        case line:
+        case Mode::line:
         {
            start_x=event->pos().x();
            start_y=event->pos().y();
            break;
         }
-        case circle:
+        case Mode::circle:
         {
 
             break;
         }
+        case Mode::choose:
+        {
+            choose(event->pos().x(),event->pos().y());
+            break;
+        }
         default:break;
         }
-        qDebug()<<"left_start"<<event->pos();
+        qDebug()<<"left_start"<<event->pos().rx();
+        qDebug()<<"left_start"<<event->pos().ry();
 
     }
     else if(event->button()==Qt::RightButton)
@@ -142,7 +260,8 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
     }
     else if(event->button()==Qt::MidButton)
     {
-         qDebug()<<"mid_start"<<event->pos();
+        setMode(Mode::choose);
+        qDebug()<<"mid_start"<<event->pos();
     }
 }
 
@@ -167,12 +286,12 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         default:break;
         }
 
-          qDebug()<<"left_end"<<event->pos();
-    }
-    else if(event->button()==Qt::RightButton)
-    {
+        qDebug()<<"left_end"<<event->pos();
+  }
+  else if(event->button()==Qt::RightButton)
+  {
 
-         qDebug()<<"right_end"<<event->pos();
+       qDebug()<<"right_end"<<event->pos();
     }
     else if(event->button()==Qt::MidButton)
     {

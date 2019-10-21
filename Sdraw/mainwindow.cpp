@@ -23,6 +23,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionLine_toggled(bool arg1)
 {
+    qDebug()<<"line_chosen_dead";
+   // ui->openGLWidget->setMode(Mode::line);
+}
+
+void MainWindow::on_actionLine_triggered()
+{
     qDebug()<<"line_chosen";
     ui->openGLWidget->setMode(Mode::line);
+}
+
+void MainWindow::on_actionDelete_triggered()
+{
+    qDebug()<<"delete";
+    ui->openGLWidget->OPT_delete();
 }
