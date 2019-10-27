@@ -50,6 +50,7 @@
     <addaction name="action_N"/>
     <addaction name="action_O"/>
     <addaction name="action_S"/>
+    <addaction name="actionReadText_R"/>
    </widget>
    <widget class="QMenu" name="menu_E">
     <property name="title">
@@ -78,6 +79,8 @@
      <string>View</string>
     </property>
     <addaction name="actionTool_bar"/>
+    <addaction name="actionColor"/>
+    <addaction name="actionSize"/>
    </widget>
    <widget class="QMenu" name="menuOptions_2">
     <property name="title">
@@ -184,6 +187,21 @@
   <action name="actionMove">
    <property name="text">
     <string>Move</string>
+   </property>
+  </action>
+  <action name="actionColor">
+   <property name="text">
+    <string>Color</string>
+   </property>
+  </action>
+  <action name="actionReadText_R">
+   <property name="text">
+    <string>ReadText(&amp;R)</string>
+   </property>
+  </action>
+  <action name="actionSize">
+   <property name="text">
+    <string>Size</string>
    </property>
   </action>
  </widget>

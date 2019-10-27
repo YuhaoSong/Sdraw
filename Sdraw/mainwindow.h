@@ -22,6 +22,20 @@ private slots:
 
     void on_actionDelete_triggered();
 
+    void on_actionColor_triggered();
+
+    void on_action_S_triggered();
+
+    void on_action_O_triggered();
+
+    void on_actionReadText_R_triggered();
+
+    void on_actionSize_triggered();
+
+    void on_actionCircle_triggered();
+
+    void on_actionEllipse_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -1,16 +1,18 @@
 #include "graphlibrary.h"
 #include <Qdebug>
+#include <QtMath>
 //#include <gl/glu.h>
 
 GraphLibrary::GraphLibrary(QWidget *parent )
 {
     curpid=0;
-    curcolor[0]=1;
+    curcolor[0]=0;
     curcolor[1]=0;
     curcolor[2]=0;
     ischoosen=false;
     setMode(Mode::choose);
-    setSize(4);
+    setSize(1);
+    setAlgro(Bresenham);
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
@@ -36,6 +38,18 @@ void GraphLibrary::setSize(int size)
     this->cursize=size;
 }
 
+void GraphLibrary::setColor(int r, int b, int g)
+{
+    curcolor[0]=r/255;
+    curcolor[1]=b/255;
+    curcolor[2]=g/255;
+}
+
+void GraphLibrary::setAlgro(Algro x)
+{
+    aflag=x;
+}
+
 void GraphLibrary::drawPoint(int x, int y)
 {
     Point temp;
@@ -52,38 +66,101 @@ void GraphLibrary::drawPoint(int x, int y)
 
 void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
 {
+
     qDebug()<<"drawline"<<endl;
-    drawPoint(x1, y1);
-    drawPoint(x2, y2);
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int flag = (dx >= dy) ? 0 : 1;
-    int a = (x2 > x1) ? 1 : -1;
-    int b = (y2 > y1) ? 1 : -1;
-    int x = x1;
-    int y = y1;
-    if(flag){
-        int temp = dx;
-        dx = dy;
-        dy = temp;
+    if(aflag==DDA)
+    {
+        double delta_x, delta_y, x, y;
+        int dx, dy, dist;
+        dx = x2 - x1;
+        dy = y2 - y1;
+        dist=(abs(dx)>abs(dy))?abs(dx):abs(dy);
+        delta_x = (double)dx / (double)dist;
+        delta_y = (double)dy / (double)dist;
+        x = x1;
+        y = y1;
+        for (int i = 1; i <= dist; i++)
+        {
+            drawPoint(x,y);
+            x += delta_x;
+            y += delta_y;
+         }
+         curpid++;
     }
-    int h = 2 * dy - dx;
-    for (int i = 1; i <= dx; ++i) {
-        drawPoint(x, y);
-        if (h >= 0) {
-            if (!flag)
-                    y += b;
-            else
-                    x += a;
-            h -= 2 * dx;
+    else if(aflag==Bresenham)
+    {
+        int x, y, dx, dy, s1, s2, p;
+        x=x1; y=y1;
+        dx=abs(x2-x1);
+        dy=abs(y2-y1);
+        s1=(x2>x1)?1:-1;
+        s2=(y2>y1)?1:-1;
+        if(dy<dx)
+        {
+            p=2*dy-dx;
+            for(int i=1;i<=dx;i++)
+            {
+                drawPoint(x,y);
+                if(p>=0)
+                {
+                    y=y+s2;
+                    p=p-2*dx;
+                }
+                x=x+s1;
+                p=p+2*dy;
+             }
         }
-        if (!flag)
-            x += a;
         else
-            y += b;
-        h += 2 * dy;
+        {
+            p=2*dx-dy;
+            for(int i=1;i<=dy;i++)
+            {
+                drawPoint(x,y);
+                if(p>=0)
+                {
+                    x=x+s1;
+                    p=p-2*dy;
+                }
+                y=y+s2;
+                p=p+2*dx;
+             }
+        }
     }
-    curpid++;
+}
+
+void GraphLibrary::drawCircle(int x1, int y1, int x2, int y2)
+{
+    double circleR=sqrt(pow(x1-x2,2)+pow(y1-y2,2));
+    int p=5-4*circleR;
+    int x=0;int y=circleR;
+    drawPoint(x1+x,y1+y);
+    drawPoint(x1+x,y1-y);
+    drawPoint(x1+y,y1+x);
+    drawPoint(x1-y,y1+x);
+    while(x<y)
+    {
+
+        x++;
+        if (p < 0)
+            p=p + 8 * x + 12;
+        else{
+            p = p + 8 * (x - y) + 20;
+            y--;
+        }
+        drawPoint(x1+x,y1+y);
+        drawPoint(x1-x,y1+y);
+        drawPoint(x1+x,y1-y);
+        drawPoint(x1-x,y1-y);
+        drawPoint(x1+y,y1+x);
+        drawPoint(x1-y,y1+x);
+        drawPoint(x1+y,y1-x);
+        drawPoint(x1-y,y1-x);
+    }
+}
+
+void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
+{
+
 }
 
 void GraphLibrary::choose(int x, int y)
@@ -193,7 +270,7 @@ void GraphLibrary::paintGL()
         else
         {
             qDebug()<<"chosen";
-            glColor3d(1,1,1);
+            glColor3d(0.5,0.5,0.5);
         }
         glPointSize(cursize);
         glBegin(GL_POINTS);
@@ -208,8 +285,7 @@ void GraphLibrary::initializeGL()
 {
     qDebug()<<"initializeGL"<<endl;
     initializeOpenGLFunctions();
-    glClearColor(0.0f,0.0f,0.0f,0.0f);
-
+    glClearColor(1.0f,1.0f,1.0f,1.0f);
 }
 
 void GraphLibrary::resizeGL(int w, int h)
@@ -239,7 +315,8 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
         }
         case Mode::circle:
         {
-
+            start_x=event->pos().x();
+            start_y=event->pos().y();
             break;
         }
         case Mode::choose:
@@ -280,7 +357,9 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         }
         case circle:
         {
-
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            drawCircle(start_x,start_y,end_x,end_y);
             break;
         }
         default:break;

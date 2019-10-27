@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 //#include <GL/glu.h>
 enum Mode{choose,freeedit, line, circle, rectangle, ellipse};
+enum Algro{DDA,Bresenham};
 struct Point//every pixel
 {
     int x;
@@ -26,9 +27,13 @@ public:
     ~GraphLibrary();
     void setMode(Mode mode);
     void setSize(int size);
+    void setColor(int r, int b,int g);
+    void setAlgro(Algro x);
 
     void drawPoint(int x,int y);
     void drawLine(int x1,int y1,int x2,int y2);
+    void drawCircle(int x1,int y1,int x2,int y2);
+    void drawEllipse(int x1,int y1,int x2,int y2);
 
     void choose(int x,int y);
     void unchoose();
@@ -37,6 +42,7 @@ public:
     void OPT_move();
     void OPT_scale();
     void OPT_clip();
+
 protected:
     void paintGL() override;//refresh
     void initializeGL() override;//init
@@ -58,6 +64,7 @@ private:
     int cursize;
     bool ischoosen;
     int choosenpid;
+    Algro aflag;
 
 };
 

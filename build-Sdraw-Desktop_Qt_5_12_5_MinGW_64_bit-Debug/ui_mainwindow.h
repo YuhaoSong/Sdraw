@@ -42,6 +42,9 @@ public:
     QAction *actionScale;
     QAction *actionClip;
     QAction *actionMove;
+    QAction *actionColor;
+    QAction *actionReadText_R;
+    QAction *actionSize;
     QWidget *centralwidget;
     GraphLibrary *openGLWidget;
     QMenuBar *menubar;
@@ -93,6 +96,12 @@ public:
         actionClip->setObjectName(QString::fromUtf8("actionClip"));
         actionMove = new QAction(MainWindow);
         actionMove->setObjectName(QString::fromUtf8("actionMove"));
+        actionColor = new QAction(MainWindow);
+        actionColor->setObjectName(QString::fromUtf8("actionColor"));
+        actionReadText_R = new QAction(MainWindow);
+        actionReadText_R->setObjectName(QString::fromUtf8("actionReadText_R"));
+        actionSize = new QAction(MainWindow);
+        actionSize->setObjectName(QString::fromUtf8("actionSize"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new GraphLibrary(centralwidget);
@@ -131,6 +140,7 @@ public:
         menu_F->addAction(action_N);
         menu_F->addAction(action_O);
         menu_F->addAction(action_S);
+        menu_F->addAction(actionReadText_R);
         menu_E->addAction(actionUndo);
         menu_E->addAction(actionRedo);
         menu_E->addAction(actionScale);
@@ -144,6 +154,8 @@ public:
         menuOptions->addAction(actionEllipse);
         menuOptions->addAction(actionRectangle);
         menuView->addAction(actionTool_bar);
+        menuView->addAction(actionColor);
+        menuView->addAction(actionSize);
         menuOptions_2->addAction(actionChoose);
         menuOptions_2->addAction(actionChoose_by_area);
 
@@ -176,6 +188,9 @@ public:
         actionScale->setText(QApplication::translate("MainWindow", "Scale", nullptr));
         actionClip->setText(QApplication::translate("MainWindow", "Clip", nullptr));
         actionMove->setText(QApplication::translate("MainWindow", "Move", nullptr));
+        actionColor->setText(QApplication::translate("MainWindow", "Color", nullptr));
+        actionReadText_R->setText(QApplication::translate("MainWindow", "ReadText(&R)", nullptr));
+        actionSize->setText(QApplication::translate("MainWindow", "Size", nullptr));
         menu_F->setTitle(QApplication::translate("MainWindow", "File(&F)", nullptr));
         menu_E->setTitle(QApplication::translate("MainWindow", "Edit(&E)", nullptr));
         menuOptions->setTitle(QApplication::translate("MainWindow", "Insert", nullptr));
