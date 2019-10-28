@@ -16,6 +16,7 @@ GraphLibrary::GraphLibrary(QWidget *parent )
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
+    setMouseTracking(true);
    // qDebug()<<"mode="<<curmode;
     update();
 }
@@ -160,7 +161,51 @@ void GraphLibrary::drawCircle(int x1, int y1, int x2, int y2)
 
 void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
 {
+    int Rx=abs((x1-x2)/2);
+    int Ry=abs((y1-y2)/2);
+    int xc=(x1+x2)/2;
+    int yc=(y1+y2)/2;
+    int x=0;int y=Ry;
+    int p=Ry*Ry-Rx*Rx*Ry+Rx*Rx/4;
+    drawPoint(xc+x,yc+y);
+    drawPoint(xc+x,yc-y);
+    while(Ry*Ry*x<Rx*Rx*y)
+    {
+        x++;
+        if(p<0)
+        {
+            p=p+2*Ry*Ry*x+Ry*Ry;
+        }
+        else if(p>=0)
+        {
+            p=p+2*Ry*Ry*x-2*Rx*Rx*y+2*Rx*Rx+Ry*Ry;
+            y--;
+        }
+        drawPoint(xc+x,yc+y);
+        drawPoint(xc-x,yc+y);
+        drawPoint(xc+x,yc-y);
+        drawPoint(xc-x,yc-y);
 
+    }
+   p=Ry*Ry*(x+1/2)*(x+1/2)+Rx*Rx*(y-1)*(y-1)-Rx*Rx*Ry*Ry;
+    while(y>0)
+    {
+        y--;
+        if(p>0)
+        {
+            p=p-2*Rx*Rx*y+Rx*Rx;
+        }
+        else if(p<=0)
+        {
+            x++;
+            p=p+2*Ry*Ry*x-2*Rx*Rx*y+Rx*Rx;
+
+        }
+        drawPoint(xc+x,yc+y);
+        drawPoint(xc-x,yc+y);
+        drawPoint(xc+x,yc-y);
+        drawPoint(xc-x,yc-y);
+    }
 }
 
 void GraphLibrary::choose(int x, int y)
@@ -319,6 +364,12 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
             start_y=event->pos().y();
             break;
         }
+        case Mode::ellipse:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
+            break;
+        }
         case Mode::choose:
         {
             choose(event->pos().x(),event->pos().y());
@@ -360,6 +411,13 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             end_x=event->pos().x();
             end_y=event->pos().y();
             drawCircle(start_x,start_y,end_x,end_y);
+            break;
+        }
+        case ellipse:
+        {
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            drawEllipse(start_x,start_y,end_x,end_y);
             break;
         }
         default:break;
