@@ -34,6 +34,7 @@ public:
     void drawLine(int x1,int y1,int x2,int y2);
     void drawCircle(int x1,int y1,int x2,int y2);
     void drawEllipse(int x1,int y1,int x2,int y2);
+    void drawRectangle(int x1,int y1,int x2,int y2);
 
     void choose(int x,int y);
     void unchoose();
@@ -65,6 +66,7 @@ private:
     bool ischoosen;
     int choosenpid;
     Algro aflag;
+    bool dflag;
 
 };
 

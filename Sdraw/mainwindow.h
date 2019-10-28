@@ -36,6 +36,8 @@ private slots:
 
     void on_actionEllipse_triggered();
 
+    void on_actionRectangle_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

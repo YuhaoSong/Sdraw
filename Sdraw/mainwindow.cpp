@@ -47,6 +47,12 @@ void MainWindow::on_actionEllipse_triggered()
     ui->openGLWidget->setMode(Mode::ellipse);
 }
 
+void MainWindow::on_actionRectangle_triggered()
+{
+    qDebug()<<"rectangle_chosen";
+    ui->openGLWidget->setMode(Mode::rectangle);
+}
+
 void MainWindow::on_actionDelete_triggered()
 {
     qDebug()<<"delete";

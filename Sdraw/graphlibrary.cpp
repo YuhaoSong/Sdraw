@@ -16,7 +16,6 @@ GraphLibrary::GraphLibrary(QWidget *parent )
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
-    setMouseTracking(true);
    // qDebug()<<"mode="<<curmode;
     update();
 }
@@ -86,7 +85,6 @@ void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
             x += delta_x;
             y += delta_y;
          }
-         curpid++;
     }
     else if(aflag==Bresenham)
     {
@@ -208,6 +206,14 @@ void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
     }
 }
 
+void GraphLibrary::drawRectangle(int x1, int y1, int x2, int y2)
+{
+    drawLine(x1,y1,x1,y2);
+    drawLine(x2,y1,x2,y2);
+    drawLine(x1,y1,x2,y1);
+    drawLine(x1,y2,x2,y2);
+}
+
 void GraphLibrary::choose(int x, int y)
 {
     qDebug()<<"choose";
@@ -229,6 +235,9 @@ void GraphLibrary::choose(int x, int y)
         {
             if(iter->pid==temppid)
             {
+                iter->color[0]=iter->color[0]/2;
+                iter->color[1]=iter->color[1]/2;
+                iter->color[2]=iter->color[2]/2;
                 iter->choosen=true;
             }
         }
@@ -247,6 +256,9 @@ void GraphLibrary::unchoose()
     {
         if(iter->choosen==true)
         {
+            iter->color[0]=iter->color[0]*2;
+            iter->color[1]=iter->color[1]*2;
+            iter->color[2]=iter->color[2]*2;
             iter->choosen=false;
         }
     }
@@ -370,6 +382,12 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
             start_y=event->pos().y();
             break;
         }
+        case Mode::rectangle:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
+            break;
+        }
         case Mode::choose:
         {
             choose(event->pos().x(),event->pos().y());
@@ -404,6 +422,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
            end_x=event->pos().x();
            end_y=event->pos().y();
            drawLine(start_x,start_y,end_x,end_y);
+           curpid++;
            break;
         }
         case circle:
@@ -411,6 +430,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             end_x=event->pos().x();
             end_y=event->pos().y();
             drawCircle(start_x,start_y,end_x,end_y);
+            curpid++;
             break;
         }
         case ellipse:
@@ -418,6 +438,15 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             end_x=event->pos().x();
             end_y=event->pos().y();
             drawEllipse(start_x,start_y,end_x,end_y);
+            curpid++;
+            break;
+        }
+        case rectangle:
+        {
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            drawRectangle(start_x,start_y,end_x,end_y);
+            curpid++;
             break;
         }
         default:break;
