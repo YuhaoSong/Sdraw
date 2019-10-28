@@ -38,11 +38,11 @@ void GraphLibrary::setSize(int size)
     this->cursize=size;
 }
 
-void GraphLibrary::setColor(int r, int b, int g)
+void GraphLibrary::setColor(int r, int g, int b)
 {
     curcolor[0]=r/255;
-    curcolor[1]=b/255;
-    curcolor[2]=g/255;
+    curcolor[1]=g/255;
+    curcolor[2]=b/255;
 }
 
 void GraphLibrary::setAlgro(Algro x)
@@ -61,6 +61,7 @@ void GraphLibrary::drawPoint(int x, int y)
     temp.color[2]=curcolor[2];
     temp.mode=curmode;
     temp.choosen=false;
+    temp.size=cursize;
     curboard.push_back(temp);
 }
 
@@ -312,6 +313,97 @@ void GraphLibrary::OPT_clip()
     }
 }
 
+void GraphLibrary::read_text(QString filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly|QIODevice::Text);
+    while (!file.atEnd())
+    {
+        QByteArray line = file.readLine();
+        QString str(line);
+        QStringList strList=str.split(" ");
+        if(strList[0]=="resetCanvas")
+        {
+            int w=strList[1].toInt();
+            int h=strList[2].toInt();
+            qDebug()<<w<<" "<<h<<" "<<strList[2];
+            //TODO
+        }
+        else if(strList[0]=="saveCanvas")
+        {
+            QString filename=strList[1].trimmed();
+            //TODO
+        }
+        else if(strList[0]=="setColor")
+        {
+            int r=strList[1].toInt();
+            int g=strList[2].toInt();
+            int b=strList[3].toInt();
+            this->setColor(r,g,b);
+
+        }
+        else if(strList[0]=="drawLine")
+        {
+            int id=strList[1].toInt();
+            int x1=strList[2].toInt();
+            int y1=strList[3].toInt();
+            int x2=strList[4].toInt();
+            int y2=strList[5].toInt();
+            QString algro=strList[6].trimmed();
+            if(algro=="DDA")
+            {
+                aflag=DDA;
+            }
+            else
+            {
+                aflag=Bresenham;
+            }
+            curpid=id;
+            drawLine(x1,y1,x2,y2);
+        }
+        else if(strList[0]=="drawEllipse")
+        {
+            int id=strList[1].toInt();
+            int x1=strList[2].toInt();
+            int y1=strList[3].toInt();
+            int x2=strList[4].toInt();
+            int y2=strList[5].toInt();
+            curpid=id;
+            drawEllipse(x1,y1,x2,y2);
+        }
+        else if(strList[0]=="drawPolygon")
+        {
+
+        }
+        else if(strList[0]=="drawCurve")
+        {
+
+        }
+        else if(strList[0]=="translate")
+        {
+
+        }
+        else if(strList[0]=="rotate")
+        {
+
+        }
+        else if(strList[0]=="scale")
+        {
+
+        }
+        else if(strList[0]=="clip")
+        {
+
+        }
+        for(int i=0;i<strList.size();i++)
+        {
+
+        }
+
+    }
+    file.close();
+}
+
 void GraphLibrary::paintGL()
 {
     //qDebug()<<"printGL"<<endl;
@@ -329,7 +421,7 @@ void GraphLibrary::paintGL()
             qDebug()<<"chosen";
             glColor3d(0.5,0.5,0.5);
         }
-        glPointSize(cursize);
+        glPointSize(iter->size);
         glBegin(GL_POINTS);
         glVertex3f(iter->x,this->size().height()-iter->y,0);
       //  glVertex3f(iter->x,iter->y,0);

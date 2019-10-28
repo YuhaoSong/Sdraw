@@ -86,7 +86,8 @@ void MainWindow::on_action_O_triggered()
 
 void MainWindow::on_actionReadText_R_triggered()
 {
-
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open order in text"), "", tr("Normal text file (*.txt);;All (*.*)"));
+    ui->openGLWidget->read_text(filename);
 }
 
 void MainWindow::on_actionSize_triggered()

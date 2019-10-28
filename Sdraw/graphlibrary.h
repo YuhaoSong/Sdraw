@@ -16,6 +16,7 @@ struct Point//every pixel
     double color[3];
     bool choosen;
     int pid;
+    int size;
     Mode mode;
 
 };
@@ -27,9 +28,8 @@ public:
     ~GraphLibrary();
     void setMode(Mode mode);
     void setSize(int size);
-    void setColor(int r, int b,int g);
+    void setColor(int r, int g,int b);
     void setAlgro(Algro x);
-
     void drawPoint(int x,int y);
     void drawLine(int x1,int y1,int x2,int y2);
     void drawCircle(int x1,int y1,int x2,int y2);
@@ -43,6 +43,8 @@ public:
     void OPT_move();
     void OPT_scale();
     void OPT_clip();
+
+    void read_text(QString filename);
 
 protected:
     void paintGL() override;//refresh
