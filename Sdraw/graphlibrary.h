@@ -68,6 +68,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
     //QOpenGLContext *m_context;
 private:
+    int CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2);
     QVector<Point> curboard;//all the points which means the mirror of the board
     QVector<Point> oldboard;//TODO: used in redo and undo
     QVector<Dictionary> dictionary;
