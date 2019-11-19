@@ -8,7 +8,7 @@
 #include <QMouseEvent>
 //#include <GL/glu.h>
 enum Mode{choose,freeedit, line, circle, rectangle, ellipse};
-enum Algro{DDA,Bresenham};
+enum Algro{DDA,Bresenham,CohenSutherland,LiangBarsky};
 struct Point//every pixel
 {
     int x;
@@ -39,10 +39,10 @@ public:
     void choose(int x,int y);
     void unchoose();
     void OPT_delete();
-    void OPT_rotate();
-    void OPT_move();
-    void OPT_scale();
-    void OPT_clip();
+    void OPT_rotate(int x,int y,double r);
+    void OPT_move(int x,int y);
+    void OPT_scale(int x,int y,double s);
+    void OPT_clip(int x1,int y1,int x2,int y2);
 
     void read_text(QString filename);
 

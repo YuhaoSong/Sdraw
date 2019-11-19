@@ -281,20 +281,38 @@ void GraphLibrary::OPT_delete()
     }
 }
 
-void GraphLibrary::OPT_rotate()
+void GraphLibrary::OPT_rotate(int x,int y,double r)
 {
     if(ischoosen==true)
     {
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+        {
+            if(iter->pid==choosenpid)
+            {
 
+                double c=cos(r);
+                double s=sin(r);
+                iter->x=x+(iter->x-x)*c-(iter->y-y)*s;
+                iter->y=y+(iter->x-x)*s+(iter->y-y)*c;
+            }
+        }
     }
 }
 
-void GraphLibrary::OPT_move()
+void GraphLibrary::OPT_move(int x,int y)
 {
     if(ischoosen==true)
     {
-
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+        {
+            if(iter->pid==choosenpid)
+            {
+                iter->x+=x;
+                iter->y+=y;
+            }
+        }
     }
+
 }
 
 void GraphLibrary::OPT_scale()
