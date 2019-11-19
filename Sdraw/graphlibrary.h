@@ -20,6 +20,19 @@ struct Point//every pixel
     Mode mode;
 
 };
+struct dataPoint
+{
+    int x;
+    int y;
+};
+
+struct Dictionary
+{
+    int pid;
+    Mode mode;
+    QVector<double> para;
+};
+
 class GraphLibrary : public QOpenGLWidget,protected QOpenGLFunctions
 {
     Q_OBJECT
@@ -57,6 +70,7 @@ protected:
 private:
     QVector<Point> curboard;//all the points which means the mirror of the board
     QVector<Point> oldboard;//TODO: used in redo and undo
+    QVector<Dictionary> dictionary;
     double curcolor[3];// change color or something
     Mode curmode;// make a shape
     int curpid;
