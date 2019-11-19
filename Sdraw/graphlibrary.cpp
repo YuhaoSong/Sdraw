@@ -315,7 +315,7 @@ void GraphLibrary::OPT_move(int x,int y)
 
 }
 
-void GraphLibrary::OPT_scale()
+void GraphLibrary::OPT_scale(int x,int y,double s)
 {
     if(ischoosen==true)
     {
@@ -323,11 +323,63 @@ void GraphLibrary::OPT_scale()
     }
 }
 
-void GraphLibrary::OPT_clip()
+void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
 {
-    if(ischoosen==true)
+    QVector<Dictionary>::iterator iter;
+    for(iter=dictionary.begin();iter!=dictionary.end();iter++)
     {
+        if(iter->pid==curpid)
+        {
+            break;
+        }
+    }
+    if(x1>x2)
+    {
+        int temp=x2;
+        x2=x1;
+        x1=temp;
+    }
+    if(y1>y2)
+    {
+        int temp=y2;
+        y2=y1;
+        y1=temp;
+    }
+    if(ischoosen==true&&iter->mode==line)
+    {
+        int xs=iter->para[0];
+        int ys=iter->para[1];
+        int xe=iter->para[2];
+        int ye=iter->para[3];
+        if(aflag==CohenSutherland)
+        {
+            int s=CohenSutherlandTools(xs,ys,x1,y1,x2,y2);
+            int e=CohenSutherlandTools(xe,ye,x1,y1,x2,y2);
+            if(s==e)
+            {
+                if(s==0)
+                {
+                    //do nothing
+                }
+                else if(s!=0)
+                {
+                    //delete
+                }
+            }
+            else if((s&e)!=0)
+            {
+                //delete
+            }
+            else
+            {
 
+            }
+
+        }
+        if(aflag==LiangBarsky)
+        {
+
+        }
     }
 }
 
@@ -420,6 +472,20 @@ void GraphLibrary::read_text(QString filename)
 
     }
     file.close();
+}
+
+int GraphLibrary::CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2)
+{
+    int s;
+    int s1=(y>y2)?1:0;
+    s1=s1*8;
+    int s2=(y<y1)?1:0;
+    s2=s2*4;
+    int s3=(x>x2)?1:0;
+    s3=s3*2;
+    int s4=(x<x1)?1:0;
+    s=s1+s2+s3+s4;
+    return s;
 }
 
 void GraphLibrary::paintGL()
