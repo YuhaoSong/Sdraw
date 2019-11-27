@@ -5,11 +5,12 @@
 
 GraphLibrary::GraphLibrary(QWidget *parent )
 {
-    curpid=0;
+    curpid=1;
     curcolor[0]=0;
     curcolor[1]=0;
     curcolor[2]=0;
     ischoosen=false;
+    tempP=false;
     setMode(Mode::choose);
     setSize(1);
     setAlgro(Bresenham);
@@ -61,6 +62,7 @@ void GraphLibrary::setScale(double x)
     scale=x;
 }
 
+
 void GraphLibrary::drawPoint(int x, int y,int pid)
 {
     Point temp;
@@ -76,9 +78,28 @@ void GraphLibrary::drawPoint(int x, int y,int pid)
     curboard.push_back(temp);
 }
 
-void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
+void GraphLibrary::drawTemp(int x, int y)
 {
+    Point temp;
+    temp.pid=0;
+    temp.x=x;
+    temp.y=y;
+    temp.color[0]=curcolor[0];
+    temp.color[1]=curcolor[1];
+    temp.color[2]=curcolor[2];
+    temp.mode=Mode::temp;
+    temp.choosen=false;
+    temp.size=cursize;
+    tempboard.push_back(temp);
+}
 
+
+void GraphLibrary::drawLine(Dictionary temp)
+{
+    int x1=temp.para[0];
+    int y1=temp.para[1];
+    int x2=temp.para[2];
+    int y2=temp.para[3];
     qDebug()<<"drawline"<<endl;
     if(aflag==DDA)
     {
@@ -93,7 +114,7 @@ void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
         y = y1;
         for (int i = 1; i <= dist; i++)
         {
-            drawPoint(x,y);
+            drawPoint(x,y,temp.pid);
             x += delta_x;
             y += delta_y;
          }
@@ -111,7 +132,7 @@ void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
             p=2*dy-dx;
             for(int i=1;i<=dx;i++)
             {
-                drawPoint(x,y);
+                drawPoint(x,y,temp.pid);
                 if(p>=0)
                 {
                     y=y+s2;
@@ -126,7 +147,7 @@ void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
             p=2*dx-dy;
             for(int i=1;i<=dy;i++)
             {
-                drawPoint(x,y);
+                drawPoint(x,y,temp.pid);
                 if(p>=0)
                 {
                     x=x+s1;
@@ -139,15 +160,19 @@ void GraphLibrary::drawLine(int x1, int y1, int x2, int y2)
     }
 }
 
-void GraphLibrary::drawCircle(int x1, int y1, int x2, int y2)
+void GraphLibrary::drawCircle(Dictionary temp)
 {
+    int x1=temp.para[0];
+    int y1=temp.para[1];
+    int x2=temp.para[2];
+    int y2=temp.para[3];
     double circleR=sqrt(pow(x1-x2,2)+pow(y1-y2,2));
     int p=5-4*circleR;
     int x=0;int y=circleR;
-    drawPoint(x1+x,y1+y);
-    drawPoint(x1+x,y1-y);
-    drawPoint(x1+y,y1+x);
-    drawPoint(x1-y,y1+x);
+    drawPoint(x1+x,y1+y,temp.pid);
+    drawPoint(x1+x,y1-y,temp.pid);
+    drawPoint(x1+y,y1+x,temp.pid);
+    drawPoint(x1-y,y1+x,temp.pid);
     while(x<y)
     {
 
@@ -158,27 +183,31 @@ void GraphLibrary::drawCircle(int x1, int y1, int x2, int y2)
             p = p + 8 * (x - y) + 20;
             y--;
         }
-        drawPoint(x1+x,y1+y);
-        drawPoint(x1-x,y1+y);
-        drawPoint(x1+x,y1-y);
-        drawPoint(x1-x,y1-y);
-        drawPoint(x1+y,y1+x);
-        drawPoint(x1-y,y1+x);
-        drawPoint(x1+y,y1-x);
-        drawPoint(x1-y,y1-x);
+        drawPoint(x1+x,y1+y,temp.pid);
+        drawPoint(x1-x,y1+y,temp.pid);
+        drawPoint(x1+x,y1-y,temp.pid);
+        drawPoint(x1-x,y1-y,temp.pid);
+        drawPoint(x1+y,y1+x,temp.pid);
+        drawPoint(x1-y,y1+x,temp.pid);
+        drawPoint(x1+y,y1-x,temp.pid);
+        drawPoint(x1-y,y1-x,temp.pid);
     }
 }
 
-void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
+void GraphLibrary::drawEllipse(Dictionary temp)
 {
+    int x1=temp.para[0];
+    int y1=temp.para[1];
+    int x2=temp.para[2];
+    int y2=temp.para[3];
     int Rx=abs((x1-x2)/2);
     int Ry=abs((y1-y2)/2);
     int xc=(x1+x2)/2;
     int yc=(y1+y2)/2;
     int x=0;int y=Ry;
     int p=Ry*Ry-Rx*Rx*Ry+Rx*Rx/4;
-    drawPoint(xc+x,yc+y);
-    drawPoint(xc+x,yc-y);
+    drawPoint(xc+x,yc+y,temp.pid);
+    drawPoint(xc+x,yc-y,temp.pid);
     while(Ry*Ry*x<Rx*Rx*y)
     {
         x++;
@@ -191,10 +220,10 @@ void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
             p=p+2*Ry*Ry*x-2*Rx*Rx*y+2*Rx*Rx+Ry*Ry;
             y--;
         }
-        drawPoint(xc+x,yc+y);
-        drawPoint(xc-x,yc+y);
-        drawPoint(xc+x,yc-y);
-        drawPoint(xc-x,yc-y);
+        drawPoint(xc+x,yc+y,temp.pid);
+        drawPoint(xc-x,yc+y,temp.pid);
+        drawPoint(xc+x,yc-y,temp.pid);
+        drawPoint(xc-x,yc-y,temp.pid);
 
     }
    p=Ry*Ry*(x+1/2)*(x+1/2)+Rx*Rx*(y-1)*(y-1)-Rx*Rx*Ry*Ry;
@@ -211,30 +240,68 @@ void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
             p=p+2*Ry*Ry*x-2*Rx*Rx*y+Rx*Rx;
 
         }
-        drawPoint(xc+x,yc+y);
-        drawPoint(xc-x,yc+y);
-        drawPoint(xc+x,yc-y);
-        drawPoint(xc-x,yc-y);
+        drawPoint(xc+x,yc+y,temp.pid);
+        drawPoint(xc-x,yc+y,temp.pid);
+        drawPoint(xc+x,yc-y,temp.pid);
+        drawPoint(xc-x,yc-y,temp.pid);
     }
 }
 
-void GraphLibrary::drawRectangle(int x1, int y1, int x2, int y2)
+void GraphLibrary::drawRectangle(Dictionary temp)
 {
+    qDebug()<<temp.para[0]<<" "<<temp.para[0]<<" "<<temp.para[2]<<" "<<temp.para[3];
+    Dictionary x1;
+    x1.pid=temp.pid;
+    qDebug()<<temp.pid;
+    x1.para.push_back(temp.para[0]);
+    x1.para.push_back(temp.para[1]);
+    x1.para.push_back(temp.para[0]);
+    x1.para.push_back(temp.para[3]);
     qDebug()<<"drawRectangle";
-    drawLine(x1,y1,x1,y2);
-    drawLine(x2,y1,x2,y2);
-    drawLine(x1,y1,x2,y1);
-    drawLine(x1,y2,x2,y2);
+    drawLine(x1);
+    Dictionary x2;
+    x2.pid=temp.pid;
+    x2.para.push_back(temp.para[2]);
+    x2.para.push_back(temp.para[1]);
+    x2.para.push_back(temp.para[2]);
+    x2.para.push_back(temp.para[3]);
+    drawLine(x2);
+    Dictionary x3;
+    x3.pid=temp.pid;
+    x3.para.push_back(temp.para[0]);
+    x3.para.push_back(temp.para[1]);
+    x3.para.push_back(temp.para[2]);
+    x3.para.push_back(temp.para[1]);
+    drawLine(x3);
+    Dictionary x4;
+    x4.pid=temp.pid;
+    x4.para.push_back(temp.para[0]);
+    x4.para.push_back(temp.para[3]);
+    x4.para.push_back(temp.para[2]);
+    x4.para.push_back(temp.para[3]);
+    drawLine(x4);
 }
 
-void GraphLibrary::drawPolygon(QVector<dataPoint> x)
+void GraphLibrary::drawPolygon(Dictionary temp)
 {
-qDebug()<<"draw teh fucking polygon";
-    for(int i=0;i<x.size()-1;i++)
+    qDebug()<<"draw teh fucking polygon";
+    for(int i=0;i<temp.para.size()-3;i=i+2)
     {
-        drawLine(x[i].x,x[i].y,x[i+1].x,x[i+1].y);
+        Dictionary x1;
+        x1.pid=temp.pid;
+        x1.para.push_back(temp.para[i]);
+        x1.para.push_back(temp.para[i+1]);
+        x1.para.push_back(temp.para[i+2]);
+        x1.para.push_back(temp.para[i+3]);
+        drawLine(x1);
     }
-    drawLine(x[x.size()-1].x,x[x.size()-1].y,x[0].x,x[0].y);
+    Dictionary x2;
+    x2.pid=temp.pid;
+    x2.para.push_back(temp.para[0]);
+    x2.para.push_back(temp.para[1]);
+    x2.para.push_back(temp.para[temp.para.size()-2]);
+    x2.para.push_back(temp.para[temp.para.size()-1]);
+    drawLine(x2);
 }
 
 void GraphLibrary:: choose(int x, int y)
@@ -357,39 +424,51 @@ void GraphLibrary::OPT_scale(int x,int y,double s)
         {
             if(iter->pid==choosenpid)
             {
-                //qDebug()<<iter->mode;
+                qDebug()<<iter->mode;
                 break;
             }
         }
+
         OPT_delete();
+        qDebug()<<"delete complete";
+        qDebug()<<"delete complete";
+        qDebug()<<"delete complete";
+        qDebug()<<"delete complete";
+        qDebug()<<iter->para.size();
         for(int i=0;i<iter->para.size();i++)
         {
+            qDebug()<<"old"<<iter->para[i];
             iter->para[i]=((double)iter->para[i])*s+((double)x)*(1-s);
         }
+        qDebug()<<"here";
         switch(iter->mode)
         {
         case Mode::circle:
         {
-            drawCircle(iter->para[0],iter->para[1],iter->para[2],iter->para[3]);
+            drawCircle(*iter);
             break;
         }
         case Mode::line:
         {
+            drawLine(*iter);
             break;
         }
         case Mode::ellipse:
         {
+            drawEllipse(*iter);
             break;
         }
         case Mode::rectangle:
         {
+            drawRectangle(*iter);
             break;
         }
         case Mode::polygon:
         {
+            drawPolygon(*iter);
             break;
         }
-
+        default:break;
         }
       /*  for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
         {
@@ -526,7 +605,11 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
                 OPT_delete();
                 qDebug()<<"delete complete";
                 setAlgro(DDA);
-                drawLine(xs,ys,xe,ye);
+                iter->para[0]=xs;
+                iter->para[1]=ys;
+                iter->para[2]=xe;
+                iter->para[3]=ye;
+                drawLine(*iter);
             }
             else
             {
@@ -580,14 +663,14 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
                {
                    return;
                }
-               int nx1,nx2,ny1,ny2;
-               nx1 = xs - u1 *(xs - xe);
-               ny1 = ys - u1 *(ys - ye);
-               nx2 = xs - u2 *(xs - xe);
-               ny2 = ys - u2 *(ys - ye);
+               //int nx1,nx2,ny1,ny2;
+               iter->para[0] = xs - u1 *(xs - xe);
+               iter->para[1] = ys - u1 *(ys - ye);
+               iter->para[2] = xs - u2 *(xs - xe);
+               iter->para[3] = ys - u2 *(ys - ye);
                OPT_delete();
                setAlgro(DDA);
-               drawLine(nx1,ny1,nx2,ny2);
+               drawLine(*iter);
         }
     }
     else
@@ -648,26 +731,65 @@ void GraphLibrary::paintGL()
 {
     //qDebug()<<"printGL"<<endl;
     glClear(GL_COLOR_BUFFER_BIT);
-    for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+    if(tempP==false)
     {
-       // qDebug()<<"x="<<iter->x<<" "<<"y="<<iter->y;
-        if(iter->choosen==false)
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
         {
-           // qDebug()<<"unchoose";
-            glColor3d(iter->color[0],iter->color[1],iter->color[2]);
+           // qDebug()<<"x="<<iter->x<<" "<<"y="<<iter->y;
+                if(iter->choosen==false)
+                {
+                   // qDebug()<<"unchoose";
+                    glColor3d(iter->color[0],iter->color[1],iter->color[2]);
+                }
+                else
+                {
+                   // qDebug()<<"chosen";
+                    glColor3d(0.5,0.5,0.5);
+                }
+                glPointSize(iter->size);
+                glBegin(GL_POINTS);
+                glVertex3f(iter->x,this->size().height()-iter->y,0);
+              //  glVertex3f(iter->x,iter->y,0);
+                glEnd();
         }
-        else
-        {
-           // qDebug()<<"chosen";
-            glColor3d(0.5,0.5,0.5);
-        }
-        glPointSize(iter->size);
-        glBegin(GL_POINTS);
-        glVertex3f(iter->x,this->size().height()-iter->y,0);
-      //  glVertex3f(iter->x,iter->y,0);
-        glEnd();
+        update();
     }
-    update();
+    else
+    {
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+        {
+           // qDebug()<<"x="<<iter->x<<" "<<"y="<<iter->y;
+                if(iter->choosen==false)
+                {
+                   // qDebug()<<"unchoose";
+                    glColor3d(iter->color[0],iter->color[1],iter->color[2]);
+                }
+                else
+                {
+                   // qDebug()<<"chosen";
+                    glColor3d(0.5,0.5,0.5);
+                }
+                glPointSize(iter->size);
+                glBegin(GL_POINTS);
+                glVertex3f(iter->x,this->size().height()-iter->y,0);
+              //  glVertex3f(iter->x,iter->y,0);
+                glEnd();
+        }
+
+        for(QVector<Point>::iterator iter=tempboard.begin();iter != tempboard.end();iter++)
+        {
+           // qDebug()<<"x="<<iter->x<<" "<<"y="<<iter->y;
+
+                   // qDebug()<<"unchoose";
+                glColor3d(iter->color[0],iter->color[1],iter->color[2]);
+                glPointSize(iter->size);
+                glBegin(GL_POINTS);
+                glVertex3f(iter->x,this->size().height()-iter->y,0);
+              //  glVertex3f(iter->x,iter->y,0);
+                glEnd();
+        }
+        update();
+    }
 }
 
 void GraphLibrary::initializeGL()
@@ -722,8 +844,6 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
         }
         case Mode::polygon:
         {
-            start_x=event->pos().x();
-            start_y=event->pos().y();
             break;
         }
         case Mode::choose:
@@ -783,7 +903,6 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         {   //qDebug()<<"drawline";
            end_x=event->pos().x();
            end_y=event->pos().y();
-           drawLine(start_x,start_y,end_x,end_y);
            Dictionary x;
            x.pid=curpid;
            x.mode=curmode;
@@ -792,6 +911,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
            x.para.push_back(end_x);
            x.para.push_back(end_y);
            dictionary.push_back(x);
+           drawLine(x);
            curpid++;
            break;
         }
@@ -799,7 +919,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         {
             end_x=event->pos().x();
             end_y=event->pos().y();
-            drawCircle(start_x,start_y,end_x,end_y);
+           // drawCircle(start_x,start_y,end_x,end_y);
             Dictionary x;
             x.pid=curpid;
             x.mode=curmode;
@@ -808,6 +928,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             x.para.push_back(end_x);
             x.para.push_back(end_y);
             dictionary.push_back(x);
+            drawCircle(x);
             curpid++;
             break;
         }
@@ -815,7 +936,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         {
             end_x=event->pos().x();
             end_y=event->pos().y();
-            drawEllipse(start_x,start_y,end_x,end_y);
+            //drawEllipse(start_x,start_y,end_x,end_y);
             Dictionary x;
             x.pid=curpid;
             x.mode=curmode;
@@ -824,6 +945,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             x.para.push_back(end_x);
             x.para.push_back(end_y);
             dictionary.push_back(x);
+            drawEllipse(x);
             curpid++;
             break;
         }
@@ -838,7 +960,9 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
                 polygonf=true;
                 start_x=t.x;
                 start_y=t.y;
+                drawTemp(t.x,t.y);
                 polygonp.push_back(t);
+                tempP=true;
             }
             else
             {
@@ -852,12 +976,17 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
                         x.para.push_back(polygonp[i].x);
                         x.para.push_back(polygonp[i].y);
                     }
-                    drawPolygon(polygonp);
+                    drawPolygon(x);
+                    dictionary.push_back(x);
+                    polygonp.clear();
+                    tempboard.clear();
+                    tempP=false;
                     polygonf=false;
                 }
                 else
                 {
-                     polygonp.push_back(t);
+                    drawTemp(t.x,t.y);
+                    polygonp.push_back(t);
                 }
             }
              break;
@@ -867,7 +996,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         {
             end_x=event->pos().x();
             end_y=event->pos().y();
-            drawRectangle(start_x,start_y,end_x,end_y);
+           // drawRectangle(start_x,start_y,end_x,end_y);
             Dictionary x;
             x.pid=curpid;
             x.mode=curmode;
@@ -876,6 +1005,8 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             x.para.push_back(end_x);
             x.para.push_back(end_y);
             dictionary.push_back(x);
+            qDebug()<<"release rectangle";
+            drawRectangle(x);
             curpid++;
             break;
         }

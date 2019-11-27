@@ -21,12 +21,13 @@ public:
     void setAlgro(Algro x);
     void setAngle(int x);
     void setScale(double x);
-    void drawPoint(int x,int y);
-    void drawLine(int x1,int y1,int x2,int y2);
-    void drawCircle(int x1,int y1,int x2,int y2);
-    void drawEllipse(int x1,int y1,int x2,int y2);
-    void drawRectangle(int x1,int y1,int x2,int y2);
-    void drawPolygon(QVector<dataPoint> x);
+    void drawPoint(int x,int y,int pid);
+    void drawTemp(int x,int y);
+    void drawLine(Dictionary temp);
+    void drawCircle(Dictionary temp);
+    void drawEllipse(Dictionary temp);
+    void drawRectangle(Dictionary temp);
+    void drawPolygon(Dictionary temp);
     void choose(int x,int y);
     void clear();
     void unchoose();
@@ -49,7 +50,8 @@ public:
     int CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2);
     int getintersection(int x1,int y1,int x2,int y2,int a,bool horizon );
     QVector<Point> curboard;//all the points which means the mirror of the board
-    QVector<Point> oldboard;//TODO: used in redo and undo
+    QVector<Point> tempboard;//TODO: used in redo and undo
+
     QVector<Dictionary> dictionary;
     QVector<dataPoint> polygonp;
     double curcolor[3];// change color or something
@@ -67,6 +69,7 @@ public:
     bool polygonf;
     int angle;
     double scale;
+    bool tempP;
 
 };
 

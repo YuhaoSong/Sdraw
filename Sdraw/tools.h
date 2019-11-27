@@ -1,7 +1,7 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 #include <QVector>
-enum Mode{choose,polygon, line, circle, rectangle, ellipse,move,clip,rotate,scale};
+enum Mode{temp,choose,polygon, line, circle, rectangle, ellipse,move,clip,rotate,scale};
 enum Algro{DDA,Bresenham,CohenSutherland,LiangBarsky};
 struct Point//every pixel
 {

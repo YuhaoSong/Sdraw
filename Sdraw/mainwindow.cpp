@@ -146,7 +146,15 @@ void MainWindow::on_actionReadText_R_triggered()
             }
             ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->curpid=id;
-            ui->openGLWidget->drawLine(x1,y1,x2,y2);
+            Dictionary x;
+            x.pid=id;
+            x.mode=Mode::line;
+            x.para.push_back(x1);
+            x.para.push_back(y1);
+            x.para.push_back(x2);
+            x.para.push_back(y2);
+            ui->openGLWidget->dictionary.push_back(x);
+            ui->openGLWidget->drawLine(x);
             ui->openGLWidget->unchoose();
         }
         else if(strList[0]=="drawEllipse")
@@ -158,17 +166,26 @@ void MainWindow::on_actionReadText_R_triggered()
             int y2=strList[5].toInt();
             ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->curpid=id;
-            ui->openGLWidget->drawEllipse(x1,y1,x2,y2);
+            Dictionary x;
+            x.pid=id;
+            x.mode=Mode::ellipse;
+            x.para.push_back(x1);
+            x.para.push_back(y1);
+            x.para.push_back(x2);
+            x.para.push_back(y2);
+            ui->openGLWidget->dictionary.push_back(x);
+            ui->openGLWidget->drawEllipse(x);
             ui->openGLWidget->unchoose();
         }
         else if(strList[0]=="drawPolygon")
         {
             int id=strList[1].toInt();
-            QVector<dataPoint> x;
+            Dictionary x;
+            x.pid=id;
+            x.mode=Mode::polygon;
             for(int i=1;i<strList.size();i++)
             {
-                dataPoint t;
-                t.x=strList[i].toInt();
+                x.para.push_back(strList[i].toInt());
             }
             ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->curpid=id;
