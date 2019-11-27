@@ -1,8 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "tools.h"
 #include <QDebug>
+#include <QVector>
 #include <QColorDialog>
 #include <QFileDialog>
+#include <QInputDialog>
+#include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QSpinBox>
+#include <QLabel>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -72,10 +79,11 @@ void MainWindow::on_actionColor_triggered()
 
 void MainWindow::on_action_S_triggered()
 {
-    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png *.bmp *.jpg)")); //选择路径
-    QSize opsize(this->size());
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("*.bmp;;*.png;;*.jpg;;*.tif;;*.gif")); //选择路径
+    qDebug()<<filename<<endl;
+    QSize opsize(this->ui->openGLWidget->size());
     QPixmap oppicture(opsize);
-    this->render(&oppicture);
+    this->ui->openGLWidget->render(&oppicture);
     oppicture.save(filename);
 }
 
@@ -87,12 +95,237 @@ void MainWindow::on_action_O_triggered()
 void MainWindow::on_actionReadText_R_triggered()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Open order in text"), "", tr("Normal text file (*.txt);;All (*.*)"));
-    ui->openGLWidget->read_text(filename);
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly|QIODevice::Text);
+    while (!file.atEnd())
+    {
+        QByteArray line = file.readLine();
+        QString str(line);
+        qDebug()<<str;
+        QStringList strList=str.split(" ");
+        if(strList[0]=="resetCanvas")
+        {
+            int w=strList[1].toInt();
+            int h=strList[2].toInt();
+            ui->openGLWidget->clear();
+            ui->openGLWidget->setFixedSize(w,h);
+            this->setFixedSize(w,h+45);
+        }
+        else if(strList[0]=="saveCanvas")
+        {
+            QString file=strList[1].trimmed();
+            QString filename = "D:/"+file+".bmp";
+            QSize opsize(this->ui->openGLWidget->size());
+            QPixmap oppicture(opsize);
+            this->ui->openGLWidget->render(&oppicture);
+            oppicture.save(filename);
+        }
+        else if(strList[0]=="setColor")
+        {
+            int r=strList[1].toInt();
+            int g=strList[2].toInt();
+            int b=strList[3].toInt();
+            ui->openGLWidget->setColor(r,g,b);
+
+        }
+        else if(strList[0]=="drawLine")
+        {
+            int id=strList[1].toInt();
+            int x1=strList[2].toInt();
+            int y1=strList[3].toInt();
+            int x2=strList[4].toInt();
+            int y2=strList[5].toInt();
+            QString algro=strList[6].trimmed();
+            if(algro=="DDA")
+            {
+                ui->openGLWidget->aflag=DDA;
+            }
+            else
+            {
+                ui->openGLWidget->aflag=Bresenham;
+            }
+            ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->curpid=id;
+            ui->openGLWidget->drawLine(x1,y1,x2,y2);
+            ui->openGLWidget->unchoose();
+        }
+        else if(strList[0]=="drawEllipse")
+        {
+            int id=strList[1].toInt();
+            int x1=strList[2].toInt();
+            int y1=strList[3].toInt();
+            int x2=strList[4].toInt();
+            int y2=strList[5].toInt();
+            ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->curpid=id;
+            ui->openGLWidget->drawEllipse(x1,y1,x2,y2);
+            ui->openGLWidget->unchoose();
+        }
+        else if(strList[0]=="drawPolygon")
+        {
+            int id=strList[1].toInt();
+            QVector<dataPoint> x;
+            for(int i=1;i<strList.size();i++)
+            {
+                dataPoint t;
+                t.x=strList[i].toInt();
+            }
+            ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->curpid=id;
+            ui->openGLWidget->drawPolygon(x);
+            ui->openGLWidget->unchoose();
+        }
+        else if(strList[0]=="drawCurve")
+        {
+
+        }
+        else if(strList[0]=="translate")
+        {
+            int id=strList[1].toInt();
+            int x=strList[2].toInt();
+            int y=strList[3].toInt();
+            ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->choosenpid=id;
+            ui->openGLWidget->OPT_move(x,y);
+            ui->openGLWidget->unchoose();
+
+        }
+        else if(strList[0]=="rotate")
+        {
+           int id=strList[1].toInt();
+            int x=strList[2].toInt();
+            int y=strList[3].toInt();
+            int r=strList[4].toInt();
+            ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->choosenpid=id;
+            ui->openGLWidget->OPT_rotate(x,y,r);
+            ui->openGLWidget->unchoose();
+        }
+        else if(strList[0]=="scale")
+        {
+            int id=strList[1].toInt();
+             int x=strList[2].toInt();
+             int y=strList[3].toInt();
+             float s=strList[4].toFloat();
+             ui->openGLWidget->ischoosen=true;
+             ui->openGLWidget->choosenpid=id;
+             ui->openGLWidget->OPT_scale(x,y,s);
+             ui->openGLWidget->unchoose();
+        }
+        else if(strList[0]=="clip")
+        {
+            int id=strList[1].toInt();
+            int x1=strList[2].toInt();
+            int y1=strList[3].toInt();
+            int x2=strList[4].toInt();
+            int y2=strList[5].toInt();
+             QString algro=strList[6].trimmed();
+             if(algro=="cohen-Sutherland")
+             {
+                 ui->openGLWidget->aflag=CohenSutherland;
+             }
+             else
+             {
+                 ui->openGLWidget->aflag=LiangBarsky;
+             }
+             ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->curpid=id;
+            ui->openGLWidget->OPT_clip(x1,y1,x2,y2);
+            ui->openGLWidget->unchoose();
+        }
+        else
+        {
+            break;
+        }
+
+    }
+    file.close();
 }
 
 void MainWindow::on_actionSize_triggered()
 {
-    ui->openGLWidget->setSize(5);
+    bool ok;
+    int x=QInputDialog::getInt(this,tr("Set size"),tr("Please input the size"),1,0,100,1,&ok);
+    if(ok)
+    {
+        ui->openGLWidget->setSize(x);
+    }
 }
 
+void MainWindow::on_actionClip_triggered()
+{
+    ui->openGLWidget->setMode(Mode::clip);
+}
 
+void MainWindow::on_actionMove_triggered()
+{
+    ui->openGLWidget->setMode(Mode::move);
+}
+
+void MainWindow::on_actionScale_triggered()
+{
+    bool ok;
+    double x=QInputDialog::getDouble(this,tr("Set angle"),tr("Please input the angle"),1,0,100,1,&ok);
+    if(ok)
+    {
+        ui->openGLWidget->setScale(x);
+    }
+    ui->openGLWidget->setMode(Mode::scale);
+}
+
+void MainWindow::on_actionRotate_triggered()
+{
+    bool ok;
+    int x=QInputDialog::getInt(this,tr("Set angle"),tr("Please input the angle"),1,0,100,1,&ok);
+    if(ok)
+    {
+        ui->openGLWidget->setAngle(x);
+    }
+    ui->openGLWidget->setMode(Mode::rotate);
+}
+
+void MainWindow::on_actionReset_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // Value1
+    QString value1 = QString("Width: ");
+    QSpinBox *spinbox1 = new QSpinBox(&dialog);
+    spinbox1->setMaximum(10000);
+    spinbox1->setMinimum(20);
+    form.addRow(value1, spinbox1);
+    // Value2
+    QString value2 = QString("Height: ");
+    QSpinBox *spinbox2 = new QSpinBox(&dialog);
+    spinbox2->setMinimum(20);
+    spinbox2->setMaximum(10000);
+    form.addRow(value2, spinbox2);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+        Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+       ui->openGLWidget->setFixedSize(spinbox1->value(),spinbox2->value());
+       this->setFixedSize(spinbox1->value(),spinbox2->value()+45);
+        qDebug()<<"w is"<<ui->openGLWidget->width()<<"  h is"<<ui->openGLWidget->height()<<endl;
+    }
+}
+
+void MainWindow::on_actionChoose_by_area_triggered()
+{
+    ui->openGLWidget->setMode(Mode::choose);
+}
+
+void MainWindow::on_actionPolygon_triggered()
+{
+    ui->openGLWidget->setMode(Mode::polygon);
+}
+
+void MainWindow::on_actionClear_triggered()
+{
+    ui->openGLWidget->clear();
+}

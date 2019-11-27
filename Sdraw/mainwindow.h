@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "graphlibrary.h"
+#include "tools.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -37,6 +38,22 @@ private slots:
     void on_actionEllipse_triggered();
 
     void on_actionRectangle_triggered();
+
+    void on_actionClip_triggered();
+
+    void on_actionMove_triggered();
+
+    void on_actionScale_triggered();
+
+    void on_actionRotate_triggered();
+
+    void on_actionReset_triggered();
+
+    void on_actionChoose_by_area_triggered();
+
+    void on_actionPolygon_triggered();
+
+    void on_actionClear_triggered();
 
 private:
     Ui::MainWindow *ui;

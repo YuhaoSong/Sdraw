@@ -23,7 +23,8 @@ SOURCES += \
 
 HEADERS += \
     graphlibrary.h \
-    mainwindow.h
+    mainwindow.h \
+    tools.h
 
 FORMS += \
     mainwindow.ui

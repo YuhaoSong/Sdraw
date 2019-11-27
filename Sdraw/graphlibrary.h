@@ -6,32 +6,8 @@
 #include <QVector>
 #include <Qdebug>
 #include <QMouseEvent>
+#include "tools.h"
 //#include <GL/glu.h>
-enum Mode{choose,freeedit, line, circle, rectangle, ellipse};
-enum Algro{DDA,Bresenham,CohenSutherland,LiangBarsky};
-struct Point//every pixel
-{
-    int x;
-    int y;
-    double color[3];
-    bool choosen;
-    int pid;
-    int size;
-    Mode mode;
-
-};
-struct dataPoint
-{
-    int x;
-    int y;
-};
-
-struct Dictionary
-{
-    int pid;
-    Mode mode;
-    QVector<double> para;
-};
 
 class GraphLibrary : public QOpenGLWidget,protected QOpenGLFunctions
 {
@@ -43,13 +19,16 @@ public:
     void setSize(int size);
     void setColor(int r, int g,int b);
     void setAlgro(Algro x);
+    void setAngle(int x);
+    void setScale(double x);
     void drawPoint(int x,int y);
     void drawLine(int x1,int y1,int x2,int y2);
     void drawCircle(int x1,int y1,int x2,int y2);
     void drawEllipse(int x1,int y1,int x2,int y2);
     void drawRectangle(int x1,int y1,int x2,int y2);
-
+    void drawPolygon(QVector<dataPoint> x);
     void choose(int x,int y);
+    void clear();
     void unchoose();
     void OPT_delete();
     void OPT_rotate(int x,int y,double r);
@@ -57,7 +36,6 @@ public:
     void OPT_scale(int x,int y,double s);
     void OPT_clip(int x1,int y1,int x2,int y2);
 
-    void read_text(QString filename);
 
 protected:
     void paintGL() override;//refresh
@@ -67,11 +45,13 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     //QOpenGLContext *m_context;
-private:
+public:
     int CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2);
+    int getintersection(int x1,int y1,int x2,int y2,int a,bool horizon );
     QVector<Point> curboard;//all the points which means the mirror of the board
     QVector<Point> oldboard;//TODO: used in redo and undo
     QVector<Dictionary> dictionary;
+    QVector<dataPoint> polygonp;
     double curcolor[3];// change color or something
     Mode curmode;// make a shape
     int curpid;
@@ -84,6 +64,9 @@ private:
     int choosenpid;
     Algro aflag;
     bool dflag;
+    bool polygonf;
+    int angle;
+    double scale;
 
 };
 

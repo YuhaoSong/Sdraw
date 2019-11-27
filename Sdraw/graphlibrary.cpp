@@ -13,6 +13,7 @@ GraphLibrary::GraphLibrary(QWidget *parent )
     setMode(Mode::choose);
     setSize(1);
     setAlgro(Bresenham);
+    polygonf=false;
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
@@ -50,10 +51,20 @@ void GraphLibrary::setAlgro(Algro x)
     aflag=x;
 }
 
-void GraphLibrary::drawPoint(int x, int y)
+void GraphLibrary::setAngle(int x)
+{
+    angle=x;
+}
+
+void GraphLibrary::setScale(double x)
+{
+    scale=x;
+}
+
+void GraphLibrary::drawPoint(int x, int y,int pid)
 {
     Point temp;
-    temp.pid=curpid;
+    temp.pid=pid;
     temp.x=x;
     temp.y=y;
     temp.color[0]=curcolor[0];
@@ -209,19 +220,30 @@ void GraphLibrary::drawEllipse(int x1, int y1, int x2, int y2)
 
 void GraphLibrary::drawRectangle(int x1, int y1, int x2, int y2)
 {
+    qDebug()<<"drawRectangle";
     drawLine(x1,y1,x1,y2);
     drawLine(x2,y1,x2,y2);
     drawLine(x1,y1,x2,y1);
     drawLine(x1,y2,x2,y2);
 }
 
-void GraphLibrary::choose(int x, int y)
+void GraphLibrary::drawPolygon(QVector<dataPoint> x)
+{
+qDebug()<<"draw teh fucking polygon";
+    for(int i=0;i<x.size()-1;i++)
+    {
+        drawLine(x[i].x,x[i].y,x[i+1].x,x[i+1].y);
+    }
+    drawLine(x[x.size()-1].x,x[x.size()-1].y,x[0].x,x[0].y);
+}
+
+void GraphLibrary:: choose(int x, int y)
 {
     qDebug()<<"choose";
     int temppid=-1;
     for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
     {
-        if((abs(iter->x-x)<cursize)&&(abs(iter->y-y)<cursize))
+        if((abs(iter->x-x)<5)&&(abs(iter->y-y)<5))
         {
             temppid=iter->pid;
             iter->choosen=true;
@@ -250,20 +272,28 @@ void GraphLibrary::choose(int x, int y)
     }
 }
 
+void GraphLibrary::clear()
+{
+    curboard.clear();
+}
+
 void GraphLibrary::unchoose()
 {
     qDebug()<<"unchoose";
-    for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+    if(ischoosen==true)
     {
-        if(iter->choosen==true)
+        for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
         {
-            iter->color[0]=iter->color[0]*2;
-            iter->color[1]=iter->color[1]*2;
-            iter->color[2]=iter->color[2]*2;
-            iter->choosen=false;
+            if(iter->choosen==true)
+            {
+                iter->color[0]=iter->color[0]*2;
+                iter->color[1]=iter->color[1]*2;
+                iter->color[2]=iter->color[2]*2;
+                iter->choosen=false;
+            }
         }
     }
-
+    ischoosen=false;
 }
 
 void GraphLibrary::OPT_delete()
@@ -297,6 +327,8 @@ void GraphLibrary::OPT_rotate(int x,int y,double r)
             }
         }
     }
+   // ischoosen=false;
+
 }
 
 void GraphLibrary::OPT_move(int x,int y)
@@ -312,24 +344,76 @@ void GraphLibrary::OPT_move(int x,int y)
             }
         }
     }
-
+ //   ischoosen=false;
 }
 
 void GraphLibrary::OPT_scale(int x,int y,double s)
 {
+    qDebug()<<"scale";
     if(ischoosen==true)
     {
+        QVector<Dictionary>::iterator iter;
+        for(iter=dictionary.begin();iter!=dictionary.end();iter++)
+        {
+            if(iter->pid==choosenpid)
+            {
+                //qDebug()<<iter->mode;
+                break;
+            }
+        }
+        OPT_delete();
+        for(int i=0;i<iter->para.size();i++)
+        {
+            iter->para[i]=((double)iter->para[i])*s+((double)x)*(1-s);
+        }
+        switch(iter->mode)
+        {
+        case Mode::circle:
+        {
+            drawCircle(iter->para[0],iter->para[1],iter->para[2],iter->para[3]);
+            break;
+        }
+        case Mode::line:
+        {
+            break;
+        }
+        case Mode::ellipse:
+        {
+            break;
+        }
+        case Mode::rectangle:
+        {
+            break;
+        }
+        case Mode::polygon:
+        {
+            break;
+        }
 
+        }
+      /*  for(QVector<Point>::iterator iter=curboard.begin();iter != curboard.end();iter++)
+        {
+            if(iter->pid==choosenpid)
+            {
+                //qDebug()<<"ox="<<iter->x<<"oy="<<iter->y;
+                iter->x=((double)iter->x)*s+((double)x)*(1-s);
+                iter->y=((double)iter->y)*s+((double)y)*(1-s);
+                //qDebug()<<"x="<<iter->x<<"y="<<iter->y;
+            }
+        }*/
     }
+     //   ischoosen=false;
 }
 
 void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
 {
+    qDebug()<<"clip";
     QVector<Dictionary>::iterator iter;
     for(iter=dictionary.begin();iter!=dictionary.end();iter++)
     {
-        if(iter->pid==curpid)
+        if(iter->pid==choosenpid)
         {
+            //qDebug()<<iter->mode;
             break;
         }
     }
@@ -347,139 +431,179 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
     }
     if(ischoosen==true&&iter->mode==line)
     {
+        qDebug()<<"success";
         int xs=iter->para[0];
         int ys=iter->para[1];
         int xe=iter->para[2];
         int ye=iter->para[3];
         if(aflag==CohenSutherland)
         {
+            qDebug()<<"cohenSutherland";
+            bool accept=false;
+            int x,y;
+            qDebug()<<"xs"<<xs<<endl<<"ys"<<ys<<endl<<"xe"<<xe<<endl<<"ye"<<ye<<endl<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
             int s=CohenSutherlandTools(xs,ys,x1,y1,x2,y2);
+            qDebug()<<"s="<<s;
             int e=CohenSutherlandTools(xe,ye,x1,y1,x2,y2);
-            if(s==e)
+            qDebug()<<"e="<<e;
+            while(true)
             {
-                if(s==0)
+                qDebug()<<"xs"<<xs<<endl<<"ys"<<ys<<endl<<"xe"<<xe<<endl<<"ye"<<ye<<endl<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
+                qDebug()<<"s="<<s;
+                qDebug()<<"e="<<e;
+               // qDebug()<<"in";
+                if((s==e)&&(s==0))
                 {
-                    //do nothing
+                   accept=true;
+                   break;
                 }
-                else if(s!=0)
+                else if((s&e)!=0)
                 {
-                    //delete
+                  break;
                 }
+                else
+                {
+                  int out;
+                  bool flag=false;
+                  if(s==0)
+                  {
+                      flag=false;
+                      out=e;
+                  }
+                  else
+                  {
+                      flag=true;
+                      out=s;
+                  }
+                  //qDebug()<<"the"<<i<<"times"<<"while out="<<out<<endl;
+                  if((out&1)!=0)
+                  {
+                      qDebug()<<"左";
+                      x=x1;
+                      y=getintersection(xs,ys,xe,ye,x1,0);
+                  }
+                  else if((out&2)!=0)
+                  {   qDebug()<<"右";
+                      x=x2;
+                      y=getintersection(xs,ys,xe,ye,x2,0);
+                  }
+                  else if((out&4)!=0)
+                  {
+                      qDebug()<<"下";
+                      x=getintersection(xs,ys,xe,ye,y1,1);
+                      y=y1;
+                  }
+                  else if((out&8)!=0)
+                  {
+                      qDebug()<<"上";
+                      x=getintersection(xs,ys,xe,ye,y2,1);
+                      y=y2;
+                  }
+                  else
+                  {
+                      qDebug()<<"wtf";
+                  }
+
+                  if(flag==true)
+                  {
+                      xs=x;
+                      ys=y;
+                      s=CohenSutherlandTools(xs,ys,x1,y1,x2,y2);
+                      qDebug()<<"update s as"<<s<<endl;
+                  }
+                  else
+                  {
+                      xe=x;
+                      ye=y;
+                      e=CohenSutherlandTools(xe,ye,x1,y1,x2,y2);
+                        qDebug()<<"update e as"<<e<<endl;
+                  }
+                }
+
             }
-            else if((s&e)!=0)
+            if(accept==true)
             {
-                //delete
+                OPT_delete();
+                qDebug()<<"delete complete";
+                setAlgro(DDA);
+                drawLine(xs,ys,xe,ye);
             }
             else
             {
-
+                 OPT_delete();
             }
 
         }
-        if(aflag==LiangBarsky)
+        else if(aflag==LiangBarsky)
         {
 
+               bool flag = false;
+               double u1 = 0, u2 =1;
+               double p[4], q[4];
+               double r;
+               p[0] = xs-xe;
+               p[1] = xe-xs;
+               p[2] = ys-ye;
+               p[3] = ye-ys;
+
+               q[0] = xs-x1;
+               q[1] = x2-xs;
+               q[2] = ys-y1;
+               q[3] = y2-ys;
+
+               for(int i = 0; i < 4; i++)
+               {
+                   r = q[i] / p[i];
+                   if(p[i] < 0)
+                   {
+                       u1 =(u1>r)?u1:r;
+                       if(u1 > u2)
+                       {
+                           flag = true;
+                       }
+                   }
+                   if(p[i] > 0)
+                   {
+                       u2 = (u2> r)?r:u2;
+                       if(u1 > u2)
+                       {
+                           flag = true;
+                       }
+                   }
+                   if(p[i] == 0 && p[i] < 0)
+                   {
+                       flag = true;
+                   }
+               }
+
+               if ( flag )
+               {
+                   return;
+               }
+               int nx1,nx2,ny1,ny2;
+               nx1 = xs - u1 *(xs - xe);
+               ny1 = ys - u1 *(ys - ye);
+               nx2 = xs - u2 *(xs - xe);
+               ny2 = ys - u2 *(ys - ye);
+               OPT_delete();
+               setAlgro(DDA);
+               drawLine(nx1,ny1,nx2,ny2);
         }
     }
-}
-
-void GraphLibrary::read_text(QString filename)
-{
-    QFile file(filename);
-    file.open(QIODevice::ReadOnly|QIODevice::Text);
-    while (!file.atEnd())
+    else
     {
-        QByteArray line = file.readLine();
-        QString str(line);
-        QStringList strList=str.split(" ");
-        if(strList[0]=="resetCanvas")
-        {
-            int w=strList[1].toInt();
-            int h=strList[2].toInt();
-            qDebug()<<w<<" "<<h<<" "<<strList[2];
-            //TODO
-        }
-        else if(strList[0]=="saveCanvas")
-        {
-            QString filename=strList[1].trimmed();
-            //TODO
-        }
-        else if(strList[0]=="setColor")
-        {
-            int r=strList[1].toInt();
-            int g=strList[2].toInt();
-            int b=strList[3].toInt();
-            this->setColor(r,g,b);
-
-        }
-        else if(strList[0]=="drawLine")
-        {
-            int id=strList[1].toInt();
-            int x1=strList[2].toInt();
-            int y1=strList[3].toInt();
-            int x2=strList[4].toInt();
-            int y2=strList[5].toInt();
-            QString algro=strList[6].trimmed();
-            if(algro=="DDA")
-            {
-                aflag=DDA;
-            }
-            else
-            {
-                aflag=Bresenham;
-            }
-            curpid=id;
-            drawLine(x1,y1,x2,y2);
-        }
-        else if(strList[0]=="drawEllipse")
-        {
-            int id=strList[1].toInt();
-            int x1=strList[2].toInt();
-            int y1=strList[3].toInt();
-            int x2=strList[4].toInt();
-            int y2=strList[5].toInt();
-            curpid=id;
-            drawEllipse(x1,y1,x2,y2);
-        }
-        else if(strList[0]=="drawPolygon")
-        {
-
-        }
-        else if(strList[0]=="drawCurve")
-        {
-
-        }
-        else if(strList[0]=="translate")
-        {
-
-        }
-        else if(strList[0]=="rotate")
-        {
-
-        }
-        else if(strList[0]=="scale")
-        {
-
-        }
-        else if(strList[0]=="clip")
-        {
-
-        }
-        for(int i=0;i<strList.size();i++)
-        {
-
-        }
-
+        qDebug()<<iter->mode;
+        qDebug()<<ischoosen;
+        qDebug()<<"fail";
     }
-    file.close();
+    // ischoosen=false;
 }
-
 int GraphLibrary::CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2)
 {
     int s;
-    int s1=(y>y2)?1:0;
+    int s1=(y<y1)?1:0;
     s1=s1*8;
-    int s2=(y<y1)?1:0;
+    int s2=(y>y2)?1:0;
     s2=s2*4;
     int s3=(x>x2)?1:0;
     s3=s3*2;
@@ -487,6 +611,38 @@ int GraphLibrary::CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int
     s=s1+s2+s3+s4;
     return s;
 }
+
+int GraphLibrary::getintersection(int x1, int y1, int x2, int y2, int a, bool horizon)
+{
+    qDebug()<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
+    double k=(double)(y1-y2)/(double)(x1-x2);
+    double b=y1-k*x1;
+    qDebug()<<"k"<<k<<endl<<"b"<<b<<endl;
+    if(horizon)
+    {
+        if(x1==x2)
+        {
+            return x1;
+        }
+        else
+        {
+            return (a-b)/k;
+        }
+    }
+    else
+    {
+        if(y1==y2)
+        {
+            return y1;
+        }
+        else
+        {
+            qDebug()<<"this?";
+            return k*a+b;
+        }
+    }
+}
+
 
 void GraphLibrary::paintGL()
 {
@@ -502,7 +658,7 @@ void GraphLibrary::paintGL()
         }
         else
         {
-            qDebug()<<"chosen";
+           // qDebug()<<"chosen";
             glColor3d(0.5,0.5,0.5);
         }
         glPointSize(iter->size);
@@ -564,9 +720,39 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
             start_y=event->pos().y();
             break;
         }
+        case Mode::polygon:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
+            break;
+        }
         case Mode::choose:
         {
             choose(event->pos().x(),event->pos().y());
+            break;
+        }
+        case Mode::clip:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
+            break;
+        }
+        case Mode::move:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
+            break;
+        }
+        case Mode::scale:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
+            break;
+        }
+        case Mode::rotate:
+        {
+            start_x=event->pos().x();
+            start_y=event->pos().y();
             break;
         }
         default:break;
@@ -598,6 +784,14 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
            end_x=event->pos().x();
            end_y=event->pos().y();
            drawLine(start_x,start_y,end_x,end_y);
+           Dictionary x;
+           x.pid=curpid;
+           x.mode=curmode;
+           x.para.push_back(start_x);
+           x.para.push_back(start_y);
+           x.para.push_back(end_x);
+           x.para.push_back(end_y);
+           dictionary.push_back(x);
            curpid++;
            break;
         }
@@ -606,6 +800,14 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             end_x=event->pos().x();
             end_y=event->pos().y();
             drawCircle(start_x,start_y,end_x,end_y);
+            Dictionary x;
+            x.pid=curpid;
+            x.mode=curmode;
+            x.para.push_back(start_x);
+            x.para.push_back(start_y);
+            x.para.push_back(end_x);
+            x.para.push_back(end_y);
+            dictionary.push_back(x);
             curpid++;
             break;
         }
@@ -614,15 +816,99 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             end_x=event->pos().x();
             end_y=event->pos().y();
             drawEllipse(start_x,start_y,end_x,end_y);
+            Dictionary x;
+            x.pid=curpid;
+            x.mode=curmode;
+            x.para.push_back(start_x);
+            x.para.push_back(start_y);
+            x.para.push_back(end_x);
+            x.para.push_back(end_y);
+            dictionary.push_back(x);
             curpid++;
             break;
+        }
+        case polygon:
+        {
+            qDebug()<<"drawpolygon";
+            dataPoint t;
+            t.x=event->pos().x();
+            t.y=event->pos().y();
+            if(polygonf==false)
+            {
+                polygonf=true;
+                start_x=t.x;
+                start_y=t.y;
+                polygonp.push_back(t);
+            }
+            else
+            {
+                if(abs(t.x-start_x)+abs(t.y-start_y)<=10)
+                {
+                    Dictionary x;
+                    x.pid=curpid;
+                    x.mode=curmode;
+                    for(int i=0;i<polygonp.size();i++)
+                    {
+                        x.para.push_back(polygonp[i].x);
+                        x.para.push_back(polygonp[i].y);
+                    }
+                    drawPolygon(polygonp);
+                    polygonf=false;
+                }
+                else
+                {
+                     polygonp.push_back(t);
+                }
+            }
+             break;
+
         }
         case rectangle:
         {
             end_x=event->pos().x();
             end_y=event->pos().y();
             drawRectangle(start_x,start_y,end_x,end_y);
+            Dictionary x;
+            x.pid=curpid;
+            x.mode=curmode;
+            x.para.push_back(start_x);
+            x.para.push_back(start_y);
+            x.para.push_back(end_x);
+            x.para.push_back(end_y);
+            dictionary.push_back(x);
             curpid++;
+            break;
+        }
+        case Mode::move:
+        {
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            OPT_move(end_x-start_x,end_y-start_y);
+            break;
+        }
+        case Mode::clip:
+        {
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            setAlgro(LiangBarsky);
+            OPT_clip(start_x,start_y,end_x,end_y);
+            unchoose();
+            break;
+        }
+        case Mode::scale:
+        {
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            OPT_scale(start_x,start_y,scale);
+            unchoose();
+            break;
+        }
+        case Mode::rotate:
+        {
+            end_x=event->pos().x();
+            end_y=event->pos().y();
+            OPT_rotate(start_x,start_y,angle);
+            unchoose();
             break;
         }
         default:break;

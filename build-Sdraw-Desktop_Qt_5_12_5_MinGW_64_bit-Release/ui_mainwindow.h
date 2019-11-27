@@ -45,6 +45,9 @@ public:
     QAction *actionColor;
     QAction *actionReadText_R;
     QAction *actionSize;
+    QAction *actionPolygon;
+    QAction *actionReset;
+    QAction *actionClear;
     QWidget *centralwidget;
     GraphLibrary *openGLWidget;
     QMenuBar *menubar;
@@ -102,11 +105,17 @@ public:
         actionReadText_R->setObjectName(QString::fromUtf8("actionReadText_R"));
         actionSize = new QAction(MainWindow);
         actionSize->setObjectName(QString::fromUtf8("actionSize"));
+        actionPolygon = new QAction(MainWindow);
+        actionPolygon->setObjectName(QString::fromUtf8("actionPolygon"));
+        actionReset = new QAction(MainWindow);
+        actionReset->setObjectName(QString::fromUtf8("actionReset"));
+        actionClear = new QAction(MainWindow);
+        actionClear->setObjectName(QString::fromUtf8("actionClear"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new GraphLibrary(centralwidget);
         openGLWidget->setObjectName(QString::fromUtf8("openGLWidget"));
-        openGLWidget->setGeometry(QRect(-20, 0, 821, 561));
+        openGLWidget->setGeometry(QRect(-20, 0, 821, 551));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -137,12 +146,9 @@ public:
         menubar->addAction(menuOptions->menuAction());
         menubar->addAction(menuView->menuAction());
         menubar->addAction(menuOptions_2->menuAction());
-        menu_F->addAction(action_N);
-        menu_F->addAction(action_O);
         menu_F->addAction(action_S);
         menu_F->addAction(actionReadText_R);
-        menu_E->addAction(actionUndo);
-        menu_E->addAction(actionRedo);
+        menu_F->addAction(actionClear);
         menu_E->addAction(actionScale);
         menu_E->addAction(actionDelete);
         menu_E->addAction(actionRotate);
@@ -150,13 +156,12 @@ public:
         menu_E->addAction(actionMove);
         menuOptions->addAction(actionCircle);
         menuOptions->addAction(actionLine);
-        menuOptions->addAction(actionFree);
         menuOptions->addAction(actionEllipse);
         menuOptions->addAction(actionRectangle);
-        menuView->addAction(actionTool_bar);
+        menuOptions->addAction(actionPolygon);
         menuView->addAction(actionColor);
         menuView->addAction(actionSize);
-        menuOptions_2->addAction(actionChoose);
+        menuView->addAction(actionReset);
         menuOptions_2->addAction(actionChoose_by_area);
 
         retranslateUi(MainWindow);
@@ -174,12 +179,12 @@ public:
         actionRedo->setText(QApplication::translate("MainWindow", "Redo", nullptr));
         actionCircle->setText(QApplication::translate("MainWindow", "Circle", nullptr));
         actionLine->setText(QApplication::translate("MainWindow", "Line", nullptr));
-        actionFree->setText(QApplication::translate("MainWindow", "Free", nullptr));
+        actionFree->setText(QApplication::translate("MainWindow", "Polygon", nullptr));
         actionEllipse->setText(QApplication::translate("MainWindow", "Ellipse", nullptr));
         actionRectangle->setText(QApplication::translate("MainWindow", "Rectangle", nullptr));
         actionTool_bar->setText(QApplication::translate("MainWindow", "Tool bar", nullptr));
         actionChoose->setText(QApplication::translate("MainWindow", "Choose by point", nullptr));
-        actionChoose_by_area->setText(QApplication::translate("MainWindow", "Choose by area", nullptr));
+        actionChoose_by_area->setText(QApplication::translate("MainWindow", "Choose mode", nullptr));
         actionDelete->setText(QApplication::translate("MainWindow", "Delete", nullptr));
 #ifndef QT_NO_SHORTCUT
         actionDelete->setShortcut(QApplication::translate("MainWindow", "Del", nullptr));
@@ -190,7 +195,10 @@ public:
         actionMove->setText(QApplication::translate("MainWindow", "Move", nullptr));
         actionColor->setText(QApplication::translate("MainWindow", "Color", nullptr));
         actionReadText_R->setText(QApplication::translate("MainWindow", "ReadText(&R)", nullptr));
-        actionSize->setText(QApplication::translate("MainWindow", "Size", nullptr));
+        actionSize->setText(QApplication::translate("MainWindow", "Pixel size", nullptr));
+        actionPolygon->setText(QApplication::translate("MainWindow", "Polygon", nullptr));
+        actionReset->setText(QApplication::translate("MainWindow", "Reset size", nullptr));
+        actionClear->setText(QApplication::translate("MainWindow", "Clear", nullptr));
         menu_F->setTitle(QApplication::translate("MainWindow", "File(&F)", nullptr));
         menu_E->setTitle(QApplication::translate("MainWindow", "Edit(&E)", nullptr));
         menuOptions->setTitle(QApplication::translate("MainWindow", "Insert", nullptr));
