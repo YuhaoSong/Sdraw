@@ -40,11 +40,11 @@ void GraphLibrary::setSize(int size)
     this->cursize=size;
 }
 
-void GraphLibrary::setColor(int r, int g, int b)
+void GraphLibrary::setColor(double r, double g, double b)
 {
-    curcolor[0]=r/255;
-    curcolor[1]=g/255;
-    curcolor[2]=b/255;
+    curcolor[0]=r/255.0;
+    curcolor[1]=g/255.0;
+    curcolor[2]=b/255.0;
 }
 
 void GraphLibrary::setAlgro(Algro x)
@@ -196,14 +196,14 @@ void GraphLibrary::drawCircle(Dictionary temp)
 
 void GraphLibrary::drawEllipse(Dictionary temp)
 {
-    int x1=temp.para[0];
-    int y1=temp.para[1];
-    int x2=temp.para[2];
-    int y2=temp.para[3];
-    int Rx=abs((x1-x2)/2);
-    int Ry=abs((y1-y2)/2);
-    int xc=(x1+x2)/2;
-    int yc=(y1+y2)/2;
+    int xc=temp.para[0];
+    int yc=temp.para[1];
+    int Rx=temp.para[2];
+    int Ry=temp.para[3];
+  //  int Rx=abs((x1-x2)/2);
+  //  int Ry=abs((y1-y2)/2);
+  //  int xc=(x1+x2)/2;
+  //  int yc=(y1+y2)/2;
     int x=0;int y=Ry;
     int p=Ry*Ry-Rx*Rx*Ry+Rx*Rx/4;
     drawPoint(xc+x,yc+y,temp.pid);
@@ -285,6 +285,7 @@ void GraphLibrary::drawRectangle(Dictionary temp)
 void GraphLibrary::drawPolygon(Dictionary temp)
 {
     qDebug()<<"draw teh fucking polygon";
+    qDebug()<<"show the fucking id"<<temp.pid;
     for(int i=0;i<temp.para.size()-3;i=i+2)
     {
         Dictionary x1;
@@ -302,6 +303,11 @@ void GraphLibrary::drawPolygon(Dictionary temp)
     x2.para.push_back(temp.para[temp.para.size()-2]);
     x2.para.push_back(temp.para[temp.para.size()-1]);
     drawLine(x2);
+}
+
+void GraphLibrary::drawCurve(Dictionary temp)
+{
+
 }
 
 void GraphLibrary:: choose(int x, int y)
@@ -394,40 +400,98 @@ void GraphLibrary::OPT_rotate(int x,int y,double r)
         }
 
         OPT_delete();
-        double c=cos(r);
-        double s=sin(r);
+        double c=cos((r*M_PI)/180);
+        double s=sin((r*M_PI)/180);
+        qDebug()<<"c="<<c<<"s="<<s;
+        qDebug()<<"size="<<iter->para.size();
+        qDebug()<<"centerx="<<x<<"centery="<<y;
+      //  qDebug()<<"length="<<sqrt((iter->para[0]-iter->para[2])*(iter->para[0]-iter->para[2])+(iter->para[1]-iter->para[3])*(iter->para[1]-iter->para[3]))<<endl;
         for(int i=0;i<iter->para.size();i=i+2)
         {
-            qDebug()<<"old"<<iter->para[i];
+            double temp=iter->para[i];
+            qDebug()<<"oldx="<<iter->para[i]<<"oldy="<<iter->para[i+1];
             iter->para[i]=x+(iter->para[i]-x)*c-(iter->para[i+1]-y)*s;
-            iter->para[i+1]=y+(iter->para[i]-x)*s-(iter->para[i+1]-y)*c;
+             qDebug()<<"y="<<y<<"iter->para[i]-x*s="<<(iter->para[i]-x)*s<<"(iter->para[i+1]-y)*c="<<(iter->para[i+1]-y)*c;
+            iter->para[i+1]=y+(temp-x)*s+(iter->para[i+1]-y)*c;
+            qDebug()<<"newx="<<iter->para[i]<<"newy="<<iter->para[i+1];
         }
+        //qDebug()<<"length="<<sqrt((iter->para[0]-iter->para[2])*(iter->para[0]-iter->para[2])+(iter->para[1]-iter->para[3])*(iter->para[1]-iter->para[3]))<<endl;
         qDebug()<<"here";
         switch(iter->mode)
         {
         case Mode::circle:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawCircle(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::line:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawLine(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::ellipse:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawEllipse(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::rectangle:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawRectangle(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::polygon:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawPolygon(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         default:break;
@@ -483,27 +547,77 @@ void GraphLibrary::OPT_scale(int x,int y,double s)
         {
         case Mode::circle:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawCircle(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::line:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawLine(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::ellipse:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawEllipse(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::rectangle:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawRectangle(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         case Mode::polygon:
         {
+            double tcolor[3];
+            tcolor[0]=curcolor[0];
+            tcolor[1]=curcolor[1];
+            tcolor[2]=curcolor[2];
+            curcolor[0]=iter->color[0];
+            curcolor[1]=iter->color[1];
+            curcolor[2]=iter->color[2];
             drawPolygon(*iter);
+            curcolor[0]=tcolor[0];
+            curcolor[1]=tcolor[1];
+            curcolor[2]=tcolor[2];
             break;
         }
         default:break;
@@ -530,7 +644,7 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
     {
         if(iter->pid==choosenpid)
         {
-            //qDebug()<<iter->mode;
+            qDebug()<<"who is choosed"<<iter->pid;
             break;
         }
     }
@@ -558,16 +672,15 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
             qDebug()<<"cohenSutherland";
             bool accept=false;
             int x,y;
-            qDebug()<<"xs"<<xs<<endl<<"ys"<<ys<<endl<<"xe"<<xe<<endl<<"ye"<<ye<<endl<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
+            //qDebug()<<"xs"<<xs<<" "<<"ys"<<ys<<" "<<"xe"<<xe<<" "<<"ye"<<ye<<" "<<"x1"<<x1<<" "<<"y1"<<y1<<" "<<"x2"<<x2<<" "<<"y2"<<y2<<endl;
             int s=CohenSutherlandTools(xs,ys,x1,y1,x2,y2);
-            qDebug()<<"s="<<s;
+         //   qDebug()<<"s="<<s;
             int e=CohenSutherlandTools(xe,ye,x1,y1,x2,y2);
-            qDebug()<<"e="<<e;
+          //  qDebug()<<"e="<<e;
             while(true)
             {
-                qDebug()<<"xs"<<xs<<endl<<"ys"<<ys<<endl<<"xe"<<xe<<endl<<"ye"<<ye<<endl<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
-                qDebug()<<"s="<<s;
-                qDebug()<<"e="<<e;
+               // qDebug()<<"xs"<<xs<<" "<<"ys"<<ys<<" "<<"xe"<<xe<<" "<<"ye"<<ye<<" "<<"x1"<<x1<<" "<<"y1"<<y1<<" "<<"x2"<<x2<<" "<<"y2"<<y2<<endl;
+              //  qDebug()<<"s="<<s<<"e="<<e;
                // qDebug()<<"in";
                 if((s==e)&&(s==0))
                 {
@@ -592,29 +705,32 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
                       flag=true;
                       out=s;
                   }
-                  //qDebug()<<"the"<<i<<"times"<<"while out="<<out<<endl;
                   if((out&1)!=0)
                   {
-                      qDebug()<<"左";
+                   //   qDebug()<<"左";
                       x=x1;
                       y=getintersection(xs,ys,xe,ye,x1,0);
+                    //  qDebug()<<"x="<<x<<"y="<<y;
                   }
                   else if((out&2)!=0)
-                  {   qDebug()<<"右";
+                  {  // qDebug()<<"右";
                       x=x2;
                       y=getintersection(xs,ys,xe,ye,x2,0);
+                     //  qDebug()<<"x="<<x<<"y="<<y;
                   }
                   else if((out&4)!=0)
                   {
-                      qDebug()<<"下";
-                      x=getintersection(xs,ys,xe,ye,y1,1);
-                      y=y1;
+                    //  qDebug()<<"下";
+                      x=getintersection(xs,ys,xe,ye,y2,1);
+                      y=y2;
+                    //   qDebug()<<"x="<<x<<"y="<<y;
                   }
                   else if((out&8)!=0)
                   {
-                      qDebug()<<"上";
-                      x=getintersection(xs,ys,xe,ye,y2,1);
-                      y=y2;
+                     // qDebug()<<"上";
+                      x=getintersection(xs,ys,xe,ye,y1,1);
+                      y=y1;
+                    //   qDebug()<<"x="<<x<<"y="<<y;
                   }
                   else
                   {
@@ -626,14 +742,14 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
                       xs=x;
                       ys=y;
                       s=CohenSutherlandTools(xs,ys,x1,y1,x2,y2);
-                      qDebug()<<"update s as"<<s<<endl;
+                    //  qDebug()<<"update s as"<<s<<endl;
                   }
                   else
                   {
                       xe=x;
                       ye=y;
                       e=CohenSutherlandTools(xe,ye,x1,y1,x2,y2);
-                        qDebug()<<"update e as"<<e<<endl;
+                      //  qDebug()<<"update e as"<<e<<endl;
                   }
                 }
 
@@ -641,13 +757,23 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
             if(accept==true)
             {
                 OPT_delete();
-                qDebug()<<"delete complete";
+               // qDebug()<<"delete complete";
                 setAlgro(DDA);
                 iter->para[0]=xs;
                 iter->para[1]=ys;
                 iter->para[2]=xe;
                 iter->para[3]=ye;
+                double tcolor[3];
+                tcolor[0]=curcolor[0];
+                tcolor[1]=curcolor[1];
+                tcolor[2]=curcolor[2];
+                curcolor[0]=iter->color[0];
+                curcolor[1]=iter->color[1];
+                curcolor[2]=iter->color[2];
                 drawLine(*iter);
+                curcolor[0]=tcolor[0];
+                curcolor[1]=tcolor[1];
+                curcolor[2]=tcolor[2];
             }
             else
             {
@@ -708,7 +834,17 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
                iter->para[3] = ys - u2 *(ys - ye);
                OPT_delete();
                setAlgro(DDA);
+               double tcolor[3];
+               tcolor[0]=curcolor[0];
+               tcolor[1]=curcolor[1];
+               tcolor[2]=curcolor[2];
+               curcolor[0]=iter->color[0];
+               curcolor[1]=iter->color[1];
+               curcolor[2]=iter->color[2];
                drawLine(*iter);
+               curcolor[0]=tcolor[0];
+               curcolor[1]=tcolor[1];
+               curcolor[2]=tcolor[2];
         }
     }
     else
@@ -730,15 +866,16 @@ int GraphLibrary::CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int
     s3=s3*2;
     int s4=(x<x1)?1:0;
     s=s1+s2+s3+s4;
+  //  qDebug()<<"s="<<s;
     return s;
 }
 
 int GraphLibrary::getintersection(int x1, int y1, int x2, int y2, int a, bool horizon)
 {
-    qDebug()<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
+   // qDebug()<<"x1"<<x1<<endl<<"y1"<<y1<<endl<<"x2"<<x2<<endl<<"y2"<<y2<<endl;
     double k=(double)(y1-y2)/(double)(x1-x2);
     double b=y1-k*x1;
-    qDebug()<<"k"<<k<<endl<<"b"<<b<<endl;
+  //  qDebug()<<"k"<<k<<endl<<"b"<<b<<endl;
     if(horizon)
     {
         if(x1==x2)
@@ -758,7 +895,7 @@ int GraphLibrary::getintersection(int x1, int y1, int x2, int y2, int a, bool ho
         }
         else
         {
-            qDebug()<<"this?";
+         //   qDebug()<<"this?";
             return k*a+b;
         }
     }
@@ -948,6 +1085,9 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
            x.para.push_back(start_y);
            x.para.push_back(end_x);
            x.para.push_back(end_y);
+           x.color[0]=curcolor[0];
+           x.color[1]=curcolor[1];
+           x.color[2]=curcolor[2];
            dictionary.push_back(x);
            drawLine(x);
            curpid++;
@@ -965,6 +1105,9 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             x.para.push_back(start_y);
             x.para.push_back(end_x);
             x.para.push_back(end_y);
+            x.color[0]=curcolor[0];
+            x.color[1]=curcolor[1];
+            x.color[2]=curcolor[2];
             dictionary.push_back(x);
             drawCircle(x);
             curpid++;
@@ -980,8 +1123,11 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             x.mode=curmode;
             x.para.push_back(start_x);
             x.para.push_back(start_y);
-            x.para.push_back(end_x);
-            x.para.push_back(end_y);
+            x.para.push_back(abs(end_x-start_x));
+            x.para.push_back(abs(end_y-start_y));
+            x.color[0]=curcolor[0];
+            x.color[1]=curcolor[1];
+            x.color[2]=curcolor[2];
             dictionary.push_back(x);
             drawEllipse(x);
             curpid++;
@@ -1014,6 +1160,9 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
                         x.para.push_back(polygonp[i].x);
                         x.para.push_back(polygonp[i].y);
                     }
+                    x.color[0]=curcolor[0];
+                    x.color[1]=curcolor[1];
+                    x.color[2]=curcolor[2];
                     drawPolygon(x);
                     dictionary.push_back(x);
                     polygonp.clear();
@@ -1042,6 +1191,9 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             x.para.push_back(start_y);
             x.para.push_back(end_x);
             x.para.push_back(end_y);
+            x.color[0]=curcolor[0];
+            x.color[1]=curcolor[1];
+            x.color[2]=curcolor[2];
             dictionary.push_back(x);
             qDebug()<<"release rectangle";
             drawRectangle(x);

@@ -105,6 +105,7 @@ void MainWindow::on_actionReadText_R_triggered()
         QStringList strList=str.split(" ");
         if(strList[0]=="resetCanvas")
         {
+            qDebug()<<"do reset";
             int w=strList[1].toInt();
             int h=strList[2].toInt();
             ui->openGLWidget->clear();
@@ -113,6 +114,7 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="saveCanvas")
         {
+                  qDebug()<<"do save";
             QString file=strList[1].trimmed();
             QString filename = "D:/"+file+".bmp";
             QSize opsize(this->ui->openGLWidget->size());
@@ -122,6 +124,7 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="setColor")
         {
+            qDebug()<<"do color";
             int r=strList[1].toInt();
             int g=strList[2].toInt();
             int b=strList[3].toInt();
@@ -130,6 +133,8 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="drawLine")
         {
+            qDebug()<<"do line";
+            qDebug()<<"color="<<ui->openGLWidget->curcolor[0]<<ui->openGLWidget->curcolor[1]<<ui->openGLWidget->curcolor[2];
             int id=strList[1].toInt();
             int x1=strList[2].toInt();
             int y1=strList[3].toInt();
@@ -153,12 +158,16 @@ void MainWindow::on_actionReadText_R_triggered()
             x.para.push_back(y1);
             x.para.push_back(x2);
             x.para.push_back(y2);
+            x.color[0]=ui->openGLWidget->curcolor[0];
+            x.color[1]=ui->openGLWidget->curcolor[1];
+            x.color[2]=ui->openGLWidget->curcolor[2];
             ui->openGLWidget->dictionary.push_back(x);
             ui->openGLWidget->drawLine(x);
             ui->openGLWidget->unchoose();
         }
         else if(strList[0]=="drawEllipse")
         {
+                  qDebug()<<"do ellipse";
             int id=strList[1].toInt();
             int x1=strList[2].toInt();
             int y1=strList[3].toInt();
@@ -173,22 +182,44 @@ void MainWindow::on_actionReadText_R_triggered()
             x.para.push_back(y1);
             x.para.push_back(x2);
             x.para.push_back(y2);
+            x.color[0]=ui->openGLWidget->curcolor[0];
+            x.color[1]=ui->openGLWidget->curcolor[1];
+            x.color[2]=ui->openGLWidget->curcolor[2];
             ui->openGLWidget->dictionary.push_back(x);
             ui->openGLWidget->drawEllipse(x);
             ui->openGLWidget->unchoose();
         }
         else if(strList[0]=="drawPolygon")
         {
+            qDebug()<<"do polygon";
             int id=strList[1].toInt();
+            int n=strList[2].toInt();
+            QString algro=strList[3].trimmed();
+            if(algro=="DDA")
+            {
+                ui->openGLWidget->aflag=DDA;
+            }
+            else
+            {
+                ui->openGLWidget->aflag=Bresenham;
+            }
+            QByteArray tline = file.readLine();
+            QString tstr(tline);
+            qDebug()<<tstr;
+            QStringList tstrList=tstr.split(" ");
             Dictionary x;
             x.pid=id;
             x.mode=Mode::polygon;
-            for(int i=1;i<strList.size();i++)
+            for(int i=0;i<2*n;i++)
             {
-                x.para.push_back(strList[i].toInt());
+                x.para.push_back(tstrList[i].toInt());
             }
+            x.color[0]=ui->openGLWidget->curcolor[0];
+            x.color[1]=ui->openGLWidget->curcolor[1];
+            x.color[2]=ui->openGLWidget->curcolor[2];
             ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->curpid=id;
+            ui->openGLWidget->dictionary.push_back(x);
             ui->openGLWidget->drawPolygon(x);
             ui->openGLWidget->unchoose();
         }
@@ -198,6 +229,7 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="translate")
         {
+                  qDebug()<<"do trans";
             int id=strList[1].toInt();
             int x=strList[2].toInt();
             int y=strList[3].toInt();
@@ -209,17 +241,20 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="rotate")
         {
+           qDebug()<<"do rotate";
            int id=strList[1].toInt();
             int x=strList[2].toInt();
             int y=strList[3].toInt();
             int r=strList[4].toInt();
             ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->choosenpid=id;
+            qDebug()<<"show the rotate id"<<id;
             ui->openGLWidget->OPT_rotate(x,y,r);
             ui->openGLWidget->unchoose();
         }
         else if(strList[0]=="scale")
         {
+             qDebug()<<"do scale";
             int id=strList[1].toInt();
              int x=strList[2].toInt();
              int y=strList[3].toInt();
@@ -231,22 +266,27 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="clip")
         {
+                  qDebug()<<"do clip";
             int id=strList[1].toInt();
             int x1=strList[2].toInt();
             int y1=strList[3].toInt();
             int x2=strList[4].toInt();
             int y2=strList[5].toInt();
              QString algro=strList[6].trimmed();
-             if(algro=="cohen-Sutherland")
+             qDebug()<<id<<" "<<x1<<" "<<y1<<" "<<x2<<" "<<y2<<" "<<algro;
+             if(algro=="Cohen-Sutherland")
              {
+                 qDebug()<<"cohen";
                  ui->openGLWidget->aflag=CohenSutherland;
              }
              else
              {
+
+                 qDebug()<<"liang";
                  ui->openGLWidget->aflag=LiangBarsky;
              }
              ui->openGLWidget->ischoosen=true;
-            ui->openGLWidget->curpid=id;
+            ui->openGLWidget->choosenpid=id;
             ui->openGLWidget->OPT_clip(x1,y1,x2,y2);
             ui->openGLWidget->unchoose();
         }

@@ -17,7 +17,7 @@ public:
     ~GraphLibrary();
     void setMode(Mode mode);
     void setSize(int size);
-    void setColor(int r, int g,int b);
+    void setColor(double r, double g,double b);
     void setAlgro(Algro x);
     void setAngle(int x);
     void setScale(double x);
@@ -28,6 +28,7 @@ public:
     void drawEllipse(Dictionary temp);
     void drawRectangle(Dictionary temp);
     void drawPolygon(Dictionary temp);
+    void drawCurve(Dictionary temp);
     void choose(int x,int y);
     void clear();
     void unchoose();
