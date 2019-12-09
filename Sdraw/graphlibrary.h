@@ -28,7 +28,7 @@ public:
     void drawEllipse(Dictionary temp);
     void drawRectangle(Dictionary temp);
     void drawPolygon(Dictionary temp);
-    void drawCurve(Dictionary temp);
+    void drawCurve(Dictionary temp,int num);
     void choose(int x,int y);
     void clear();
     void unchoose();

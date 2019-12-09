@@ -305,9 +305,27 @@ void GraphLibrary::drawPolygon(Dictionary temp)
     drawLine(x2);
 }
 
-void GraphLibrary::drawCurve(Dictionary temp)
+void GraphLibrary::drawCurve(Dictionary temp,int num)
 {
+    int *x=new int[num];
+    int *y=new int[num];
+    for(int i=0;i<num;i++)
+    {
+        x[i]=temp.para[2*i];
+        y[i]=temp.para[2*i+1];
+    }
+    int xs=x[0];
+    int ys=y[0];
+    int xe=x[num-1];
+    int ye=y[num-1];
+    if(aflag==Algro::Bezier)
+    {
 
+    }
+    else if(aflag==Algro::Bspline)
+    {
+
+    }
 }
 
 void GraphLibrary:: choose(int x, int y)
