@@ -28,7 +28,7 @@ public:
     void drawEllipse(Dictionary temp);
     void drawRectangle(Dictionary temp);
     void drawPolygon(Dictionary temp);
-    void drawCurve(Dictionary temp,int num);
+    void drawCurve(Dictionary temp);
     void choose(int x,int y);
     void clear();
     void unchoose();
@@ -37,8 +37,23 @@ public:
     void OPT_move(int x,int y);
     void OPT_scale(int x,int y,double s);
     void OPT_clip(int x1,int y1,int x2,int y2);
+    void  myC()
+    {
 
+        int i,j;
+           for(i=0; i<=MAXXX; ++i)
+           {
+               C[0][i] = 0;
+               C[i][0] = 1;
+           }
+           for(i=1; i<=MAXXX; ++i)
+           {
+               for(j=1; j<=MAXXX; ++j)
+               C[i][j] = (C[i-1][j] + C[i-1][j-1]);
+           }
 
+    }
+    int C[MAXXX+1][MAXXX+1];
 protected:
     void paintGL() override;//refresh
     void initializeGL() override;//init
@@ -55,6 +70,7 @@ public:
 
     QVector<Dictionary> dictionary;
     QVector<dataPoint> polygonp;
+    QVector<dataPoint> curvenp;
     double curcolor[3];// change color or something
     Mode curmode;// make a shape
     int curpid;
@@ -68,6 +84,7 @@ public:
     Algro aflag;
     bool dflag;
     bool polygonf;
+    bool curvenf;
     int angle;
     double scale;
     bool tempP;

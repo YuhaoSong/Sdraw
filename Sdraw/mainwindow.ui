@@ -70,6 +70,7 @@
     <addaction name="actionEllipse"/>
     <addaction name="actionRectangle"/>
     <addaction name="actionPolygon"/>
+    <addaction name="actionCurve"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -213,6 +214,11 @@
   <action name="actionClear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionCurve">
+   <property name="text">
+    <string>Curve</string>
    </property>
   </action>
  </widget>

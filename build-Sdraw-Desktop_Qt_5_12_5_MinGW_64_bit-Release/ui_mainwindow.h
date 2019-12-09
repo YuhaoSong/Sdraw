@@ -48,6 +48,7 @@ public:
     QAction *actionPolygon;
     QAction *actionReset;
     QAction *actionClear;
+    QAction *actionCurve;
     QWidget *centralwidget;
     GraphLibrary *openGLWidget;
     QMenuBar *menubar;
@@ -111,6 +112,8 @@ public:
         actionReset->setObjectName(QString::fromUtf8("actionReset"));
         actionClear = new QAction(MainWindow);
         actionClear->setObjectName(QString::fromUtf8("actionClear"));
+        actionCurve = new QAction(MainWindow);
+        actionCurve->setObjectName(QString::fromUtf8("actionCurve"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new GraphLibrary(centralwidget);
@@ -159,6 +162,7 @@ public:
         menuOptions->addAction(actionEllipse);
         menuOptions->addAction(actionRectangle);
         menuOptions->addAction(actionPolygon);
+        menuOptions->addAction(actionCurve);
         menuView->addAction(actionColor);
         menuView->addAction(actionSize);
         menuView->addAction(actionReset);
@@ -199,6 +203,7 @@ public:
         actionPolygon->setText(QApplication::translate("MainWindow", "Polygon", nullptr));
         actionReset->setText(QApplication::translate("MainWindow", "Reset size", nullptr));
         actionClear->setText(QApplication::translate("MainWindow", "Clear", nullptr));
+        actionCurve->setText(QApplication::translate("MainWindow", "Curve", nullptr));
         menu_F->setTitle(QApplication::translate("MainWindow", "File(&F)", nullptr));
         menu_E->setTitle(QApplication::translate("MainWindow", "Edit(&E)", nullptr));
         menuOptions->setTitle(QApplication::translate("MainWindow", "Insert", nullptr));

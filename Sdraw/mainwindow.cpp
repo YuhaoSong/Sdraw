@@ -225,7 +225,36 @@ void MainWindow::on_actionReadText_R_triggered()
         }
         else if(strList[0]=="drawCurve")
         {
-
+            int id=strList[1].toInt();
+            int n=strList[2].toInt();
+            QString algro=strList[3].trimmed();
+            if(algro=="Bezier")
+            {
+                ui->openGLWidget->aflag=Algro::Bezier;
+            }
+            else
+            {
+                ui->openGLWidget->aflag=Algro::Bspline;
+            }
+            QByteArray tline = file.readLine();
+            QString tstr(tline);
+            qDebug()<<tstr;
+            QStringList tstrList=tstr.split(" ");
+            Dictionary x;
+            x.pid=id;
+            x.mode=Mode::curve;
+            for(int i=0;i<2*n;i++)
+            {
+                x.para.push_back(tstrList[i].toInt());
+            }
+            x.color[0]=ui->openGLWidget->curcolor[0];
+            x.color[1]=ui->openGLWidget->curcolor[1];
+            x.color[2]=ui->openGLWidget->curcolor[2];
+            ui->openGLWidget->ischoosen=true;
+            ui->openGLWidget->curpid=id;
+            ui->openGLWidget->dictionary.push_back(x);
+            ui->openGLWidget->drawCurve(x);
+            ui->openGLWidget->unchoose();
         }
         else if(strList[0]=="translate")
         {
@@ -385,4 +414,9 @@ void MainWindow::on_actionPolygon_triggered()
 void MainWindow::on_actionClear_triggered()
 {
     ui->openGLWidget->clear();
+}
+
+void MainWindow::on_actionCurve_triggered()
+{
+    ui->openGLWidget->setMode(Mode::curve);
 }

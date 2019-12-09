@@ -14,7 +14,10 @@ GraphLibrary::GraphLibrary(QWidget *parent )
     setMode(Mode::choose);
     setSize(1);
     setAlgro(Bresenham);
+    myC();
+    qDebug()<<"C 8 6="<<C[8][6];
     polygonf=false;
+    curvenf=false;
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
@@ -110,14 +113,15 @@ void GraphLibrary::drawLine(Dictionary temp)
         dist=(abs(dx)>abs(dy))?abs(dx):abs(dy);
         delta_x = (double)dx / (double)dist;
         delta_y = (double)dy / (double)dist;
-        x = x1;
-        y = y1;
+        x = x1+0.5;
+        y = y1+0.5;
         for (int i = 1; i <= dist; i++)
         {
             drawPoint(x,y,temp.pid);
             x += delta_x;
             y += delta_y;
-         }
+        }
+        drawPoint(x2,y2,temp.pid);
     }
     else if(aflag==Bresenham)
     {
@@ -157,6 +161,7 @@ void GraphLibrary::drawLine(Dictionary temp)
                 p=p+2*dx;
              }
         }
+        drawPoint(x2,y2,temp.pid);
     }
 }
 
@@ -305,22 +310,34 @@ void GraphLibrary::drawPolygon(Dictionary temp)
     drawLine(x2);
 }
 
-void GraphLibrary::drawCurve(Dictionary temp,int num)
+void GraphLibrary::drawCurve(Dictionary temp)
 {
+    qDebug()<<"drawCurve";
+    int num=temp.para.size();
+    num=num/2;
+    qDebug()<<num;
     int *x=new int[num];
     int *y=new int[num];
     for(int i=0;i<num;i++)
     {
         x[i]=temp.para[2*i];
         y[i]=temp.para[2*i+1];
+        qDebug()<<"x"<<i<<"="<<x[i]<<"y"<<i<<"="<<y[i];
     }
-    int xs=x[0];
-    int ys=y[0];
-    int xe=x[num-1];
-    int ye=y[num-1];
     if(aflag==Algro::Bezier)
     {
-
+        for(double t=0;t<=1;t=t+0.0005)
+        {
+            double tx=0;double ty=0;
+            for(int k=0;k<num;k++)
+            {
+               // qDebug()<<"C"<<num<<" "<<k+1<<"="<<C[num][k+1];
+                tx+=(double)x[k]*(double)C[num-1][k]*(double)pow(t,k)*(double)pow(1-t,num-k-1);
+                ty+=(double)y[k]*(double)C[num-1][k]*(double)pow(t,k)*(double)pow(1-t,num-k-1);
+            }
+            qDebug()<<"tx="<<tx<<"ty="<<ty;
+            drawPoint(tx,ty,temp.pid);
+        }
     }
     else if(aflag==Algro::Bspline)
     {
@@ -873,6 +890,8 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
     }
     // ischoosen=false;
 }
+
+
 int GraphLibrary::CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2)
 {
     int s;
@@ -1077,6 +1096,27 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
     else if(event->button()==Qt::RightButton)
     {
 
+        if(curmode==Mode::curve)
+        {
+            Dictionary x;
+            x.pid=curpid;
+            x.mode=curmode;
+            for(int i=0;i<curvenp.size();i++)
+            {
+                x.para.push_back(curvenp[i].x);
+                x.para.push_back(curvenp[i].y);
+            }
+            x.color[0]=curcolor[0];
+            x.color[1]=curcolor[1];
+            x.color[2]=curcolor[2];
+            setAlgro(Algro::Bezier);
+            drawCurve(x);
+            dictionary.push_back(x);
+            curvenp.clear();
+            tempboard.clear();
+            tempP=false;
+            curvenf=false;
+        }
          qDebug()<<"right_start"<<event->pos();
     }
     else if(event->button()==Qt::MidButton)
@@ -1217,6 +1257,28 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             drawRectangle(x);
             curpid++;
             break;
+        }
+        case Mode::curve:
+        {
+            qDebug()<<"drawCurve";
+            dataPoint t;
+            t.x=event->pos().x();
+            t.y=event->pos().y();
+            if(curvenf==false)
+            {
+                curvenf=true;
+                start_x=t.x;
+                start_y=t.y;
+                drawTemp(t.x,t.y);
+                curvenp.push_back(t);
+                tempP=true;
+            }
+            else
+            {
+                drawTemp(t.x,t.y);
+                curvenp.push_back(t);
+            }
+             break;
         }
         case Mode::move:
         {
