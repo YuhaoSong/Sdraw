@@ -18,9 +18,12 @@ public:
     void setMode(Mode mode);
     void setSize(int size);
     void setColor(double r, double g,double b);
-    void setAlgro(Algro x);
+    void setLAlgro(LAlgro x);
+    void setCAlgro(CAlgro x);
+    void setCuAlgro(CuAlgro x);
     void setAngle(int x);
     void setScale(double x);
+    void setK(int x);
     void drawPoint(int x,int y,int pid);
     void drawTemp(int x,int y);
     void drawLine(Dictionary temp);
@@ -31,6 +34,7 @@ public:
     void drawCurve(Dictionary temp);
     void choose(int x,int y);
     void clear();
+    double deBoor_Cox(int i, int k, double u);
     void unchoose();
     void OPT_delete();
     void OPT_rotate(int x,int y,double r);
@@ -71,6 +75,7 @@ public:
     QVector<Dictionary> dictionary;
     QVector<dataPoint> polygonp;
     QVector<dataPoint> curvenp;
+    QVector<double> U;
     double curcolor[3];// change color or something
     Mode curmode;// make a shape
     int curpid;
@@ -81,13 +86,16 @@ public:
     int cursize;
     bool ischoosen;
     int choosenpid;
-    Algro aflag;
+    LAlgro Laflag;
+    CAlgro Caflag;
+    CuAlgro Cuaflag;
     bool dflag;
     bool polygonf;
     bool curvenf;
     int angle;
     double scale;
     bool tempP;
+    int K;
 
 };
 

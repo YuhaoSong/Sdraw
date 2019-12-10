@@ -85,6 +85,7 @@
      <string>Options</string>
     </property>
     <addaction name="actionChoose_by_area"/>
+    <addaction name="actionAlgro"/>
    </widget>
    <addaction name="menu_F"/>
    <addaction name="menu_E"/>
@@ -219,6 +220,11 @@
   <action name="actionCurve">
    <property name="text">
     <string>Curve</string>
+   </property>
+  </action>
+  <action name="actionAlgro">
+   <property name="text">
+    <string>Algro</string>
    </property>
   </action>
  </widget>

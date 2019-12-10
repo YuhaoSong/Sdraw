@@ -10,6 +10,7 @@
 #include <QDialogButtonBox>
 #include <QSpinBox>
 #include <QLabel>
+#include <QComboBox>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -143,11 +144,11 @@ void MainWindow::on_actionReadText_R_triggered()
             QString algro=strList[6].trimmed();
             if(algro=="DDA")
             {
-                ui->openGLWidget->aflag=DDA;
+                ui->openGLWidget->setLAlgro(DDA);
             }
             else
             {
-                ui->openGLWidget->aflag=Bresenham;
+                ui->openGLWidget->setLAlgro(Bresenham);
             }
             ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->curpid=id;
@@ -197,11 +198,11 @@ void MainWindow::on_actionReadText_R_triggered()
             QString algro=strList[3].trimmed();
             if(algro=="DDA")
             {
-                ui->openGLWidget->aflag=DDA;
+                ui->openGLWidget->setLAlgro(DDA);
             }
             else
             {
-                ui->openGLWidget->aflag=Bresenham;
+                ui->openGLWidget->setLAlgro(Bresenham);
             }
             QByteArray tline = file.readLine();
             QString tstr(tline);
@@ -230,11 +231,11 @@ void MainWindow::on_actionReadText_R_triggered()
             QString algro=strList[3].trimmed();
             if(algro=="Bezier")
             {
-                ui->openGLWidget->aflag=Algro::Bezier;
+                ui->openGLWidget->setCuAlgro(Bezier);
             }
             else
             {
-                ui->openGLWidget->aflag=Algro::Bspline;
+                ui->openGLWidget->setCuAlgro(Bspline);
             }
             QByteArray tline = file.readLine();
             QString tstr(tline);
@@ -305,14 +306,14 @@ void MainWindow::on_actionReadText_R_triggered()
              qDebug()<<id<<" "<<x1<<" "<<y1<<" "<<x2<<" "<<y2<<" "<<algro;
              if(algro=="Cohen-Sutherland")
              {
-                 qDebug()<<"cohen";
-                 ui->openGLWidget->aflag=CohenSutherland;
+
+                 ui->openGLWidget->setCAlgro(CohenSutherland);
              }
              else
              {
 
-                 qDebug()<<"liang";
-                 ui->openGLWidget->aflag=LiangBarsky;
+
+                 ui->openGLWidget->setCAlgro(LiangBarsky);
              }
              ui->openGLWidget->ischoosen=true;
             ui->openGLWidget->choosenpid=id;
@@ -419,4 +420,64 @@ void MainWindow::on_actionClear_triggered()
 void MainWindow::on_actionCurve_triggered()
 {
     ui->openGLWidget->setMode(Mode::curve);
+}
+
+void MainWindow::on_actionAlgro_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel(" Choose The Algorithm:"));
+
+    QString value1 = QString("Line: ");
+    QComboBox * combo1 = new QComboBox(&dialog);
+    combo1->addItem(QWidget::tr("DDA"));
+    combo1->addItem(QWidget::tr("Bresenham"));
+    form.addRow(value1, combo1);
+
+    QString value2 = QString("Clip: ");
+    QComboBox * combo2 = new QComboBox(&dialog);
+    combo2->addItem(QWidget::tr("CohenSutherland"));
+    combo2->addItem(QWidget::tr("LiangBarsky"));
+    form.addRow(value2, combo2);
+
+    QString value3 = QString("Curve: ");
+    QComboBox * combo3 = new QComboBox(&dialog);
+    combo3->addItem(QWidget::tr("Bezier"));
+    combo3->addItem(QWidget::tr("Bspline"));
+    form.addRow(value3, combo3);
+
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+        Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        if(combo1->currentIndex()==0)
+        {
+            ui->openGLWidget->setLAlgro(DDA);
+        }
+        else
+        {
+            ui->openGLWidget->setLAlgro(Bresenham);
+        }
+        if(combo2->currentIndex()==0)
+        {
+            ui->openGLWidget->setCAlgro(CohenSutherland);
+        }
+        else
+        {
+            ui->openGLWidget->setCAlgro(LiangBarsky);
+        }
+        if(combo3->currentIndex()==0)
+        {
+            ui->openGLWidget->setCuAlgro(Bezier);
+        }
+        else
+        {
+            ui->openGLWidget->setCuAlgro(Bspline);
+        }
+
+    }
 }

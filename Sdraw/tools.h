@@ -2,7 +2,9 @@
 #define TOOLS_H
 #include <QVector>
 enum Mode{temp,choose,polygon, line, circle, rectangle, ellipse,move,clip,rotate,scale,curve};
-enum Algro{DDA,Bresenham,CohenSutherland,LiangBarsky,Bezier,Bspline};
+enum LAlgro{DDA,Bresenham};
+enum CAlgro{CohenSutherland,LiangBarsky};
+enum CuAlgro{Bezier,Bspline};
 #define MAXXX 30
 struct Point//every pixel
 {

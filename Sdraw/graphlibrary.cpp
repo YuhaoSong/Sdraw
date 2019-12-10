@@ -1,7 +1,7 @@
 #include "graphlibrary.h"
 #include <Qdebug>
 #include <QtMath>
-//#include <gl/glu.h>
+#include <gl/glu.h>
 
 GraphLibrary::GraphLibrary(QWidget *parent )
 {
@@ -13,11 +13,13 @@ GraphLibrary::GraphLibrary(QWidget *parent )
     tempP=false;
     setMode(Mode::choose);
     setSize(1);
-    setAlgro(Bresenham);
+    setLAlgro(Bresenham);
+    setCAlgro(LiangBarsky);
+    setCuAlgro(CuAlgro::Bezier);
     myC();
-    qDebug()<<"C 8 6="<<C[8][6];
     polygonf=false;
     curvenf=false;
+    setK(2);
     //initializeGL();
    // paintGL();
     qDebug()<<"GraphLibrary"<<endl;
@@ -50,10 +52,22 @@ void GraphLibrary::setColor(double r, double g, double b)
     curcolor[2]=b/255.0;
 }
 
-void GraphLibrary::setAlgro(Algro x)
+void GraphLibrary::setLAlgro(LAlgro x)
 {
-    aflag=x;
+    Laflag=x;
 }
+
+void GraphLibrary::setCAlgro(CAlgro x)
+{
+    Caflag=x;
+}
+
+void GraphLibrary::setCuAlgro(CuAlgro x)
+{
+    Cuaflag=x;
+}
+
+
 
 void GraphLibrary::setAngle(int x)
 {
@@ -63,6 +77,11 @@ void GraphLibrary::setAngle(int x)
 void GraphLibrary::setScale(double x)
 {
     scale=x;
+}
+
+void GraphLibrary::setK(int x)
+{
+    K=x;
 }
 
 
@@ -104,7 +123,7 @@ void GraphLibrary::drawLine(Dictionary temp)
     int x2=temp.para[2];
     int y2=temp.para[3];
     qDebug()<<"drawline"<<endl;
-    if(aflag==DDA)
+    if(Laflag==DDA)
     {
         double delta_x, delta_y, x, y;
         int dx, dy, dist;
@@ -123,7 +142,7 @@ void GraphLibrary::drawLine(Dictionary temp)
         }
         drawPoint(x2,y2,temp.pid);
     }
-    else if(aflag==Bresenham)
+    else if(Laflag==Bresenham)
     {
         int x, y, dx, dy, s1, s2, p;
         x=x1; y=y1;
@@ -324,7 +343,7 @@ void GraphLibrary::drawCurve(Dictionary temp)
         y[i]=temp.para[2*i+1];
         qDebug()<<"x"<<i<<"="<<x[i]<<"y"<<i<<"="<<y[i];
     }
-    if(aflag==Algro::Bezier)
+    if(Cuaflag==CuAlgro::Bezier)
     {
         for(double t=0;t<=1;t=t+0.0005)
         {
@@ -339,10 +358,68 @@ void GraphLibrary::drawCurve(Dictionary temp)
             drawPoint(tx,ty,temp.pid);
         }
     }
-    else if(aflag==Algro::Bspline)
+    else if(Cuaflag==CuAlgro::Bspline)
     {
-
+        U.clear();
+        for(double i=0.0;i<=num+K+1;i=i+1.0)
+        {
+            U.push_back(i/(num+K+1));
+            qDebug()<<U[i];
+        }
+        qDebug()<<"U is size of"<<U.size();
+        for (double u = U[K]; u <=U[num]; u=u+0.0005)
+        {
+           double tx = 0.0;
+           double ty = 0.0;
+           for (int i = 0; i <num; i++)
+           {
+                double Nik = deBoor_Cox(i, K, u); // 基函数
+                tx += Nik*x[i];
+                ty += Nik*y[i];
+                qDebug()<<"i="<<i<<"xi="<<x[i]<<"yi="<<y[i]<<"Nik="<<Nik<<"tx="<<tx<<"ty="<<ty;
+           }
+           drawPoint(tx,ty,temp.pid);
+        }
+        U.clear();
     }
+    delete []x;
+    delete []y;
+}
+
+double GraphLibrary::deBoor_Cox(int i, int k, double u)
+{
+    if (k == 0)
+    {
+        if (u >= U[i] && u < U[i + 1])
+            return 1.0;
+        else
+            return 0.0;
+    }
+    double den1 = U[i + k] - U[i];
+    double den2 = U[i + k + 1] - U[i + 1];
+    double a = 0, b = 0;
+    if (den1 == 0 && den2 == 0)
+    {
+        a = 1;
+        b = 1;
+    }
+    else if (den1 != 0 && den2 == 0)
+    {
+        a = (double)(u - U[i]) / den1;
+        b = 1;
+    }
+    else if (den1 == 0 && den2 != 0)
+    {
+        a = 1;
+        b = (double)(U[i + k + 1] - u) / den2;
+    }
+    else
+    {
+        a = (double)(u - U[i]) / den1;
+        b = (double)(U[i + k + 1] - u) / den2;
+    }
+
+    return a*deBoor_Cox(i, k - 1, u) + b*deBoor_Cox(i + 1, k - 1, u);
 }
 
 void GraphLibrary:: choose(int x, int y)
@@ -702,7 +779,7 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
         int ys=iter->para[1];
         int xe=iter->para[2];
         int ye=iter->para[3];
-        if(aflag==CohenSutherland)
+        if(Caflag==CohenSutherland)
         {
             qDebug()<<"cohenSutherland";
             bool accept=false;
@@ -793,7 +870,7 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
             {
                 OPT_delete();
                // qDebug()<<"delete complete";
-                setAlgro(DDA);
+                setLAlgro(DDA);
                 iter->para[0]=xs;
                 iter->para[1]=ys;
                 iter->para[2]=xe;
@@ -816,7 +893,7 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
             }
 
         }
-        else if(aflag==LiangBarsky)
+        else if(Caflag==LiangBarsky)
         {
 
                bool flag = false;
@@ -868,7 +945,7 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
                iter->para[2] = xs - u2 *(xs - xe);
                iter->para[3] = ys - u2 *(ys - ye);
                OPT_delete();
-               setAlgro(DDA);
+               setLAlgro(DDA);
                double tcolor[3];
                tcolor[0]=curcolor[0];
                tcolor[1]=curcolor[1];
@@ -1109,7 +1186,7 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
             x.color[0]=curcolor[0];
             x.color[1]=curcolor[1];
             x.color[2]=curcolor[2];
-            setAlgro(Algro::Bezier);
+            setCuAlgro(CuAlgro::Bspline);
             drawCurve(x);
             dictionary.push_back(x);
             curvenp.clear();
@@ -1291,7 +1368,7 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
         {
             end_x=event->pos().x();
             end_y=event->pos().y();
-            setAlgro(LiangBarsky);
+            setCAlgro(LiangBarsky);
             OPT_clip(start_x,start_y,end_x,end_y);
             unchoose();
             break;

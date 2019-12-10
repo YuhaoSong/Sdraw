@@ -57,6 +57,8 @@ private slots:
 
     void on_actionCurve_triggered();
 
+    void on_actionAlgro_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
