@@ -15,7 +15,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    void GetParament(QString x, QString y)
+    {
+        arg1=x;
+        arg2=y;
+    }
+    void readText();
 private slots:
     void on_actionLine_toggled(bool arg1);
 
@@ -61,5 +66,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QString arg1;
+    QString arg2;
 };
 #endif // MAINWINDOW_H

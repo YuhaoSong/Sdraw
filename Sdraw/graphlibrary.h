@@ -26,6 +26,7 @@ public:
     void setK(int x);
     void drawPoint(int x,int y,int pid);
     void drawTemp(int x,int y);
+    void drawTline(Dictionary temp);
     void drawLine(Dictionary temp);
     void drawCircle(Dictionary temp);
     void drawEllipse(Dictionary temp);
@@ -41,22 +42,7 @@ public:
     void OPT_move(int x,int y);
     void OPT_scale(int x,int y,double s);
     void OPT_clip(int x1,int y1,int x2,int y2);
-    void  myC()
-    {
-
-        int i,j;
-           for(i=0; i<=MAXXX; ++i)
-           {
-               C[0][i] = 0;
-               C[i][0] = 1;
-           }
-           for(i=1; i<=MAXXX; ++i)
-           {
-               for(j=1; j<=MAXXX; ++j)
-               C[i][j] = (C[i-1][j] + C[i-1][j-1]);
-           }
-
-    }
+    void  myC();
     int C[MAXXX+1][MAXXX+1];
 protected:
     void paintGL() override;//refresh
@@ -70,8 +56,7 @@ public:
     int CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2);
     int getintersection(int x1,int y1,int x2,int y2,int a,bool horizon );
     QVector<Point> curboard;//all the points which means the mirror of the board
-    QVector<Point> tempboard;//TODO: used in redo and undo
-
+    QVector<Point> tempboard;
     QVector<Dictionary> dictionary;
     QVector<dataPoint> polygonp;
     QVector<dataPoint> curvenp;
@@ -89,7 +74,6 @@ public:
     LAlgro Laflag;
     CAlgro Caflag;
     CuAlgro Cuaflag;
-    bool dflag;
     bool polygonf;
     bool curvenf;
     int angle;

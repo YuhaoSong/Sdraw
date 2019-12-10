@@ -115,6 +115,67 @@ void GraphLibrary::drawTemp(int x, int y)
     tempboard.push_back(temp);
 }
 
+void GraphLibrary::drawTline(Dictionary temp)
+{
+    int x1=temp.para[0];
+    int y1=temp.para[1];
+    int x2=temp.para[2];
+    int y2=temp.para[3];
+    int tcolor[3];
+    tcolor[0]=curcolor[0];
+    tcolor[1]=curcolor[1];
+    tcolor[2]=curcolor[2];
+    curcolor[0]=255;
+    curcolor[1]=0;
+    curcolor[2]=0;
+    int x, y, dx, dy, s1, s2, p;
+    x=x1; y=y1;
+    dx=abs(x2-x1);
+    dy=abs(y2-y1);
+    s1=(x2>x1)?1:-1;
+    s2=(y2>y1)?1:-1;
+    if(dy<dx)
+    {
+        p=2*dy-dx;
+        for(int i=1;i<=dx;i++)
+        {
+            if(i%2==0)
+            {
+               drawTemp(x,y);
+            }
+            if(p>=0)
+            {
+                y=y+s2;
+                p=p-2*dx;
+            }
+            x=x+s1;
+            p=p+2*dy;
+        }
+    }
+    else
+    {
+        p=2*dx-dy;
+        for(int i=1;i<=dy;i++)
+        {
+            if(i%2==0)
+            {
+               drawTemp(x,y);
+            }
+            if(p>=0)
+            {
+                x=x+s1;
+                p=p-2*dy;
+            }
+            y=y+s2;
+            p=p+2*dx;
+        }
+    }
+    drawTemp(x2,y2);
+    curcolor[0]=tcolor[0];
+    curcolor[1]=tcolor[1];
+    curcolor[2]=tcolor[2];
+}
+
 
 void GraphLibrary::drawLine(Dictionary temp)
 {
@@ -968,6 +1029,23 @@ void GraphLibrary::OPT_clip(int x1,int y1,int x2,int y2)
     // ischoosen=false;
 }
 
+void GraphLibrary::myC()
+{
+
+    int i,j;
+       for(i=0; i<=MAXXX; ++i)
+       {
+           C[0][i] = 0;
+           C[i][0] = 1;
+       }
+       for(i=1; i<=MAXXX; ++i)
+       {
+           for(j=1; j<=MAXXX; ++j)
+           C[i][j] = (C[i-1][j] + C[i-1][j-1]);
+       }
+
+}
+
 
 int GraphLibrary::CohenSutherlandTools(int x, int y, int x1, int y1, int x2, int y2)
 {
@@ -1090,6 +1168,7 @@ void GraphLibrary::initializeGL()
 
 void GraphLibrary::resizeGL(int w, int h)
 {
+   // qDebug()<<"resize";
     qDebug()<<this->size().width();
     qDebug()<<this->size().height();
     glViewport(0, 0, (GLsizei)w, (GLsizei)h);
@@ -1186,13 +1265,14 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
             x.color[0]=curcolor[0];
             x.color[1]=curcolor[1];
             x.color[2]=curcolor[2];
-            setCuAlgro(CuAlgro::Bspline);
+            //setCuAlgro(CuAlgro::Bspline);
             drawCurve(x);
             dictionary.push_back(x);
             curvenp.clear();
             tempboard.clear();
             tempP=false;
             curvenf=false;
+            curpid++;
         }
          qDebug()<<"right_start"<<event->pos();
     }
@@ -1304,11 +1384,19 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
                     tempboard.clear();
                     tempP=false;
                     polygonf=false;
+                    curpid++;
                 }
                 else
                 {
                     drawTemp(t.x,t.y);
                     polygonp.push_back(t);
+                    Dictionary z;
+                    z.para.push_back(polygonp[polygonp.size()-2].x);
+                    z.para.push_back(polygonp[polygonp.size()-2].y);
+                    z.para.push_back(polygonp[polygonp.size()-1].x);
+                    z.para.push_back(polygonp[polygonp.size()-1].y);
+                    drawTline(z);
+
                 }
             }
              break;
@@ -1354,6 +1442,12 @@ void GraphLibrary::mouseReleaseEvent(QMouseEvent *event)
             {
                 drawTemp(t.x,t.y);
                 curvenp.push_back(t);
+                Dictionary z;
+                z.para.push_back(curvenp[curvenp.size()-2].x);
+                z.para.push_back(curvenp[curvenp.size()-2].y);
+                z.para.push_back(curvenp[curvenp.size()-1].x);
+                z.para.push_back(curvenp[curvenp.size()-1].y);
+                drawTline(z);
             }
              break;
         }
