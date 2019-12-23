@@ -17,5 +17,9 @@ int main(int argc, char *argv[])
         w.close();
         a.exit(0);
     }
-    return a.exec();
+    else
+    {
+        return a.exec();
+    }
+
 }

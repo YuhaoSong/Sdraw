@@ -513,7 +513,7 @@ void GraphLibrary:: choose(int x, int y)
     }
     else
     {
-        ischoosen=false;
+       // ischoosen=false;
         unchoose();
     }
 }
@@ -1273,6 +1273,11 @@ void GraphLibrary::mousePressEvent(QMouseEvent *event)
             tempP=false;
             curvenf=false;
             curpid++;
+        }
+        else
+        {
+            ischoosen=true;
+            unchoose();
         }
          qDebug()<<"right_start"<<event->pos();
     }

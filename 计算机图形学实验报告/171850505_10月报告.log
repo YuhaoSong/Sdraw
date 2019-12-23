@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.10.28)  31 OCT 2019 20:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.10.28)  22 DEC 2019 20:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -647,12 +647,32 @@ File: listings.cfg 2019/09/10 1.8c listings configuration
 ))
 Package: listings 2019/09/10 1.8c (Carsten Heinz)
 
+(c:/texlive/2019/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip59
+\subfigcapskip=\skip60
+\subfigcaptopadj=\dimen167
+\subfigbottomskip=\skip61
+\subfigcapmargin=\dimen168
+\subfiglabelskip=\skip62
+\c@subfigure=\count282
+\c@lofdepth=\count283
+\c@subtable=\count284
+\c@lotdepth=\count285
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(c:/texlive/2019/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip63
+\subfig@bottom=\skip64
+)
 (c:/texlive/2019/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
-\multirow@colwidth=\skip59
-\multirow@cntb=\count282
-\multirow@dima=\skip60
-\bigstrutjot=\dimen167
+\multirow@colwidth=\skip65
+\multirow@cntb=\count286
+\multirow@dima=\skip66
+\bigstrutjot=\dimen169
 )
 (c:/texlive/2019/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
@@ -706,16 +726,16 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 (c:/texlive/2019/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
-\@linkdim=\dimen168
-\Hy@linkcounter=\count283
-\Hy@pagecounter=\count284
+\@linkdim=\dimen170
+\Hy@linkcounter=\count287
+\Hy@pagecounter=\count288
 
 (c:/texlive/2019/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2019/09/28 v7.00a Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count285
+\Hy@SavedSpaceFactor=\count289
 
 (c:/texlive/2019/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -735,12 +755,12 @@ Package hyperref Info: Plain pages OFF on input line 4555.
 Package hyperref Info: Backreferencing OFF on input line 4560.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4793.
-\c@Hy@tempcnt=\count286
+\c@Hy@tempcnt=\count290
 LaTeX Info: Redefining \url on input line 5152.
-\XeTeXLinkMargin=\dimen169
-\Fld@menulength=\count287
-\Field@Width=\dimen170
-\Fld@charsize=\dimen171
+\XeTeXLinkMargin=\dimen171
+\Fld@menulength=\count291
+\Field@Width=\dimen172
+\Fld@charsize=\dimen173
 Package hyperref Info: Hyper figures OFF on input line 6423.
 Package hyperref Info: Link nesting OFF on input line 6428.
 Package hyperref Info: Hyper index ON on input line 6431.
@@ -750,23 +770,23 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6448.
 Package hyperref Info: PDF/A mode OFF on input line 6453.
 LaTeX Info: Redefining \ref on input line 6493.
 LaTeX Info: Redefining \pageref on input line 6497.
-\Hy@abspage=\count288
-\c@Item=\count289
-\c@Hfootnote=\count290
+\Hy@abspage=\count292
+\c@Item=\count293
+\c@Hfootnote=\count294
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (c:/texlive/2019/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2019/09/28 v7.00a Hyperref driver for pdfTeX
-\Fld@listcount=\count291
-\c@bookmark@seq@number=\count292
+\Fld@listcount=\count295
+\c@bookmark@seq@number=\count296
 
 (c:/texlive/2019/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip61
+\Hy@SectionHShift=\skip67
 )
 (c:/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
@@ -799,93 +819,97 @@ File: UTF8.enc 2015/04/18 4.8.4
 (c:/texlive/2019/texmf-dist/tex/latex/cjk/texinput/UTF8/UTF8.chr
 File: UTF8.chr 2015/04/18 4.8.4
 )
-No file 171850505_10ÊúàÊä•Âëä.aux.
+(./171850505_10ÊúàÊä•Âëä.aux
+
+LaTeX Warning: Label `x5' multiply defined.
+
+)
 \openout1 = `171850505_10ÊúàÊä•Âëä.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C00/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C05/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C09/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C10/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C20/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C19/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C40/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C42/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C43/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C50/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C52/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C49/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C60/mj/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C61/mj/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C63/mj/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C64/mj/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C65/mj/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C70/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C31/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C32/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C33/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C34/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C35/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C36/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C37/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C80/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C81/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C01/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C11/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C21/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C41/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for C62/song/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C00/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C05/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C09/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C10/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C20/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C19/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C40/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C42/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C43/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C50/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C52/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C49/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C60/mj/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C61/mj/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C63/mj/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C64/mj/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C65/mj/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C70/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C31/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C32/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C33/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C34/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C35/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C36/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C37/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C80/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C81/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C01/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C11/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C21/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C41/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for C62/song/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+ ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 36.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -923,16 +947,16 @@ LaTeX Info: Redefining \selectfont on input line 35.
 
 (c:/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count293
-\scratchdimen=\dimen172
+\scratchcounter=\count297
+\scratchdimen=\dimen174
 \scratchbox=\box57
-\nofMPsegments=\count294
-\nofMParguments=\count295
+\nofMPsegments=\count298
+\nofMParguments=\count299
 \everyMPshowfont=\toks33
-\MPscratchCnt=\count296
-\MPscratchDim=\dimen173
-\MPnumerator=\count297
-\makeMPintoPDFobject=\count298
+\MPscratchCnt=\count300
+\MPscratchDim=\dimen175
+\MPnumerator=\count301
+\makeMPintoPDFobject=\count302
 \everyMPtoPDFconversion=\toks34
 ) (c:/texlive/2019/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -951,9 +975,9 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count299
+\c@lstlisting=\count303
 \AtBeginShipoutBox=\box58
-Package hyperref Info: Link coloring ON on input line 35.
+Package hyperref Info: Link coloring ON on input line 36.
 
 (c:/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -961,77 +985,61 @@ Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (c:/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count300
+\c@section@level=\count304
 )
-LaTeX Info: Redefining \ref on input line 35.
-LaTeX Info: Redefining \pageref on input line 35.
-LaTeX Info: Redefining \nameref on input line 35.
+LaTeX Info: Redefining \ref on input line 36.
+LaTeX Info: Redefining \pageref on input line 36.
+LaTeX Info: Redefining \nameref on input line 36.
+
+(./171850505_10ÊúàÊä•Âëä.out) (./171850505_10ÊúàÊä•Âëä.out)
 \@outlinefile=\write3
 \openout3 = `171850505_10ÊúàÊä•Âëä.out'.
 
-LaTeX Font Info:    Trying to load font information for C70+rm on input line 39
+LaTeX Font Info:    Trying to load font information for C70+rm on input line 40
 .
 
 (c:/texlive/2019/texmf-dist/tex/latex/ctex/fd/c70rm.fd
 File: c70rm.fd 2019/05/29 v2.4.16 Chinese font definition (CTEX)
 )
 Package CJKpunct Info: use punctuation spaces for family 'rm' with punctstyle (
-quanjiao) on input line 39.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 39.
+quanjiao) on input line 40.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 40.
 
 
 (c:/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 39.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 40.
 
 
 (c:/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 41--43
+Underfull \hbox (badness 10000) in paragraph at lines 42--44
 
  []
 
 
-LaTeX Warning: Command \textgreater invalid in math mode on input line 51.
+LaTeX Warning: Command \textgreater invalid in math mode on input line 52.
 
 LaTeX Font Info:    Trying to load font information for OML+cmr on input line 5
-1.
+2.
 (c:/texlive/2019/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.53937> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 51.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 52.
 
 
-LaTeX Warning: Command \textgreater invalid in math mode on input line 51.
+LaTeX Warning: Command \textgreater invalid in math mode on input line 52.
 
-(c:/texlive/2019/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2019/09/10 1.8c listings language file
-)
-(c:/texlive/2019/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2019/09/10 1.8c listings language file
-)
-(c:/texlive/2019/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
-)
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 5
-4.
+<x1.jpg, id=143, 191.21437pt x 137.7647pt>
+File: x1.jpg Graphic file (type jpg)
+<use x1.jpg>
+Package pdftex.def Info: x1.jpg  used on input line 57.
+(pdftex.def)             Requested size: 369.88582pt x 266.52742pt.
 
-(c:/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.53937> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 54.
-
-(c:/texlive/2019/texmf-dist/tex/generic/ctex/zhwindowsfonts.tex
-File: zhwindowsfonts.tex 2019/05/29 v2.4.16 Windows font map loader for pdfTeX 
-and DVIPDFMx (CTEX)
-) [1
-
-]
-Overfull \hbox (0.81879pt too wide) in paragraph at lines 73--74
+Overfull \hbox (0.81879pt too wide) in paragraph at lines 54--61
 \C70/rm/m/n/10.53937/8b ° \C70/rm/m/n/10.53937/7b ó \C70/rm/m/n/10.53937/5f ó \
 C70/rm/m/n/10.53937/52 0 \C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/50 œ \C
 70/rm/m/n/10.53937/7d   \C70/rm/m/n/10.53937/4f M \C70/rm/m/n/10.53937/7f n \C7
@@ -1047,86 +1055,332 @@ C70/rm/m/n/10.53937/79 ª|\C70/rm/m/n/10.53937/30 ^^B| \C70/rm/m/n/10.53937/54 ^
 /80 ^^L\OT1/cmr/m/n/10.53937 Bresenham\C70/rm/m/n/10.53937/7b ó
  []
 
+(c:/texlive/2019/texmf-dist/tex/generic/ctex/zhwindowsfonts.tex
+File: zhwindowsfonts.tex 2019/05/29 v2.4.16 Windows font map loader for pdfTeX 
+and DVIPDFMx (CTEX)
+) [1
 
-LaTeX Warning: Command \textgreater invalid in math mode on input line 100.
+]
+
+LaTeX Warning: Command \textgreater invalid in math mode on input line 87.
 
 
-LaTeX Warning: Command \textgreater invalid in math mode on input line 100.
+LaTeX Warning: Command \textgreater invalid in math mode on input line 87.
 
-[2] [3] [4]
-No file 171850505_10ÊúàÊä•Âëä.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 202.
-[5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 202.
+<x2.png, id=233, 1275.76625pt x 721.69624pt>
+File: x2.png Graphic file (type png)
+<use x2.png>
+Package pdftex.def Info: x2.png  used on input line 94.
+(pdftex.def)             Requested size: 341.43306pt x 193.14268pt.
+[2 <./x1.jpg>]
+<x3.png, id=249, 1283.79625pt x 700.6175pt>
+File: x3.png Graphic file (type png)
+<use x3.png>
+Package pdftex.def Info: x3.png  used on input line 120.
+(pdftex.def)             Requested size: 369.88582pt x 201.85893pt.
+<x4.png, id=251, 323.2075pt x 303.1325pt>
+File: x4.png Graphic file (type png)
+<use x4.png>
+Package pdftex.def Info: x4.png  used on input line 128.
+(pdftex.def)             Requested size: 199.16928pt x 186.79773pt.
+ [3 <./x2.png> <./x3.png>]
+<x5.png, id=262, 347.2975pt x 272.01625pt>
+File: x5.png Graphic file (type png)
+<use x5.png>
+Package pdftex.def Info: x5.png  used on input line 153.
+(pdftex.def)             Requested size: 199.16928pt x 156.00136pt.
+<x6.png, id=265, 600.74437pt x 475.02469pt>
+File: x6.png Graphic file (type png)
+<use x6.png>
+Package pdftex.def Info: x6.png  used on input line 161.
+(pdftex.def)             Requested size: 199.16928pt x 157.49069pt.
+ [4 <./x4.png (PNG copy)> <./x5.png (PNG copy)>]
+<x15.jpg, id=277, 383.4325pt x 260.975pt>
+File: x15.jpg Graphic file (type jpg)
+<use x15.jpg>
+Package pdftex.def Info: x15.jpg  used on input line 170.
+(pdftex.def)             Requested size: 170.71652pt x 116.19524pt.
+
+Overfull \hbox (5.21028pt too wide) in paragraph at lines 176--177
+[]\OT1/cmr/m/n/10.53937 Bezier\C70/rm/m/n/10.53937/66 Ú \C70/rm/m/n/10.53937/7e
+ ø \C70/rm/m/n/10.53937/66 / \C70/rm/m/n/10.53937/53 ¬ \C70/rm/m/n/10.53937/65 
+p \C70/rm/m/n/10.53937/59 ^^Z \C70/rm/m/n/10.53937/98 y \C70/rm/m/n/10.53937/5f
+ ^^O \C70/rm/m/n/10.53937/66 Ú \C70/rm/m/n/10.53937/7e ø\OT1/cmr/m/n/10.53937 ,
+\C70/rm/m/n/10.53937/5b É \C70/rm/m/n/10.53937/75 1 \C70/rm/m/n/10.53937/4e ^^@
+ \C70/rm/m/n/10.53937/7e ƒ \C70/rm/m/n/10.53937/63 ß \C70/rm/m/n/10.53937/52 6 
+\C70/rm/m/n/10.53937/59 ^^Z \C70/rm/m/n/10.53937/8f π \C70/rm/m/n/10.53937/5f b
+ \C70/rm/m/n/10.53937/62 ò \C70/rm/m/n/10.53937/7e ø\OT1/cmr/m/n/10.53937 (\C70
+/rm/m/n/10.53937/63 ß \C70/rm/m/n/10.53937/52 6 \C70/rm/m/n/10.53937/59 ^^Z \C7
+0/rm/m/n/10.53937/8f π \C70/rm/m/n/10.53937/5f b\OT1/cmr/m/n/10.53937 )\C70/rm/
+m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/98 v \C70/rm/m/n/10.53937/70 π \C70/rm/m
+/n/10.53937/55 / \C70/rm/m/n/10.53937/4e ^^@ \C70/rm/m/n/10.53937/5b ö \C70/rm/
+m/n/10.53937/4e I\OT1/cmr/m/n/10.53937 ,\C70/rm/m/n/10.53937/57 (
+ []
+
+[5 <./x6.png> <./x15.jpg>]
+<x16.png, id=298, 466.74374pt x 202.7575pt>
+File: x16.png Graphic file (type png)
+<use x16.png>
+Package pdftex.def Info: x16.png  used on input line 188.
+(pdftex.def)             Requested size: 170.71652pt x 74.15901pt.
+Missing character: There is no Â in font cmr10!
+Missing character: There is no   in font cmr10!
+Missing character: There is no Ç in font cmr10!
+Missing character: There is no π in font cmr10!
+Missing character: There is no œ in font cmr10!
+Missing character: There is no å in font cmr10!
+
+Overfull \hbox (2.13605pt too wide) in paragraph at lines 198--199
+[]\C70/rm/m/n/10.53937/4e : Ü \C70/rm/m/n/10.53937/5b ö \C70/rm/m/n/10.53937/4e
+ I\OT1/cmr/m/n/10.53937 B-\C70/rm/m/n/10.53937/68 7 \C70/rm/m/n/10.53937/67 a \
+C70/rm/m/n/10.53937/57 ˙ \C70/rm/m/n/10.53937/51 ˝ \C70/rm/m/n/10.53937/65 p|\C
+70/rm/m/n/10.53937/ff ^^L| \C70/rm/m/n/10.53937/62 ^^Q \C70/rm/m/n/10.53937/4e 
+Ï \C70/rm/m/n/10.53937/8f ÿ \C70/rm/m/n/10.53937/97 ^^@ \C70/rm/m/n/10.53937/89
+ Å \C70/rm/m/n/10.53937/4e ^^@ * \C70/rm/m/n/10.53937/53 ¬ \C70/rm/m/n/10.53937
+/65 p|\C70/rm/m/n/10.53937/ff ^^L| \C70/rm/m/n/10.53937/57 ˙ \C70/rm/m/n/10.539
+37/51 ˝ \C70/rm/m/n/10.53937/65 p \C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.5393
+7/6b ! \C70/rm/m/n/10.53937/65 p |\C70/rm/m/n/10.53937/ff ^^H|\OT1/cmr/m/n/10.5
+3937 degree|\C70/rm/m/n/10.53937/ff 	| \OT1/cmr/m/n/10.53937 p|\C70/rm/m/n/10.5
+3937/ff ^^L| \C70/rm/m/n/10.53937/7b ,\OT1/cmr/m/n/10.53937 i\C70/rm/m/n/10.539
+37/4e *\OT1/cmr/m/n/10.53937 p\C70/rm/m/n/10.53937/6b !\OT1/cmr/m/n/10.53937 B-
+
+ []
+
+<x11.png, id=301, 600.74437pt x 475.02469pt>
+File: x11.png Graphic file (type png)
+<use x11.png>
+Package pdftex.def Info: x11.png  used on input line 223.
+(pdftex.def)             Requested size: 170.71652pt x 134.99202pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 223--223
+ [][] 
+ []
+
+<x12.png, id=302, 603.0028pt x 475.7775pt>
+File: x12.png Graphic file (type png)
+<use x12.png>
+Package pdftex.def Info: x12.png  used on input line 230.
+(pdftex.def)             Requested size: 170.71652pt x 134.69777pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 230--230
+ [][] 
+ []
+
+
+Overfull \hbox (13.90228pt too wide) in paragraph at lines 213--235
+\C70/rm/m/n/10.53937/5f ◊ \C70/rm/m/n/10.53937/4e : \C70/rm/m/n/10.53937/8b Â \
+C70/rm/m/n/10.53937/56 ˛ \C70/rm/m/n/10.53937/51 C \C70/rm/m/n/10.53937/76 Ñ \C
+70/rm/m/n/10.53937/56 ˛ \C70/rm/m/n/10.53937/51 C \C70/rm/m/n/10.53937/7f ^^V \
+C70/rm/m/n/10.53937/53 ˜|\C70/rm/m/n/10.53937/ff ^^L| \C70/rm/m/n/10.53937/54 ^
+^L \C70/rm/m/n/10.53937/65 ˆ \C70/rm/m/n/10.53937/5c ^^F\OT1/cmr/m/n/10.53937 i
+schoose flag\C70/rm/m/n/10.53937/8b æ \C70/rm/m/n/10.53937/7f n \C70/rm/m/n/10.
+53937/4e :\OT1/cmr/m/n/10.53937 true|\C70/rm/m/n/10.53937/ff ^^L| \C70/rm/m/n/1
+0.53937/88 h \C70/rm/m/n/10.53937/79 : \C70/rm/m/n/10.53937/62 ^^P \C70/rm/m/n/
+10.53937/52 ü \C70/rm/m/n/10.53937/90 	 \C70/rm/m/n/10.53937/4e - Ü \C70/rm/m/n
+/10.53937/56 ˛ \C70/rm/m/n/10.53937/51 C|\C70/rm/m/n/10.53937/ff ^^L| \C70/rm/m
+/n/10.53937/57 (\OT1/cmr/m/n/10.53937 paintGL\C70/rm/m/n/10.53937/4e -|\C70/rm/
+m/n/10.53937/ff ^^L|
+ []
+
+[6 <./x16.png>]
+<x13.png, id=319, 604.50844pt x 474.27188pt>
+File: x13.png Graphic file (type png)
+<use x13.png>
+Package pdftex.def Info: x13.png  used on input line 248.
+(pdftex.def)             Requested size: 170.71652pt x 133.9314pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 248--248
+ [][] 
+ []
+
+<x14.png, id=320, 602.25pt x 472.76625pt>
+File: x14.png Graphic file (type png)
+<use x14.png>
+Package pdftex.def Info: x14.png  used on input line 255.
+(pdftex.def)             Requested size: 170.71652pt x 134.01118pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 255--255
+ [][] 
+ []
+
+[7 <./x11.png> <./x12.png>]
+<s1.png, id=340, 449.68pt x 287.0725pt>
+File: s1.png Graphic file (type png)
+<use s1.png>
+Package pdftex.def Info: s1.png  used on input line 273.
+(pdftex.def)             Requested size: 284.52756pt x 181.64948pt.
+ [8 <./x13.png> <./x14.png> <./s1.png>]
+<s2.png, id=353, 341.02406pt x 231.86626pt>
+File: s2.png Graphic file (type png)
+<use s2.png>
+Package pdftex.def Info: s2.png  used on input line 296.
+(pdftex.def)             Requested size: 284.52756pt x 193.46432pt.
+Missing character: There is no å in font cmr10!
+ [9 <./s2.png>]
+Overfull \hbox (13.87013pt too wide) in paragraph at lines 318--322
+\OT1/cmr/m/n/10.53937 1.u1\C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/50 < \
+C70/rm/m/n/10.53937/75 1 \C70/rm/m/n/10.53937/7e ø \C70/rm/m/n/10.53937/6b µ \C
+70/rm/m/n/10.53937/4e Œ \C70/rm/m/n/10.53937/59 ^^V \C70/rm/m/n/10.53937/52 0 \
+C70/rm/m/n/10.53937/51 Ö \C70/rm/m/n/10.53937/90 G \C70/rm/m/n/10.53937/52 0 \C
+70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/77 È \C70/rm/m/n/10.53937/5f b \C7
+0/rm/m/n/10.53937/8f π \C70/rm/m/n/10.53937/75 L \C70/rm/m/n/10.53937/62 @ \C70
+/rm/m/n/10.53937/51 ≥ \C70/rm/m/n/10.53937/5b ö |\C70/rm/m/n/10.53937/ff ^^H|\O
+T1/cmr/m/n/10.53937 pk<0|\C70/rm/m/n/10.53937/ff 	||^^L| \C70/rm/m/n/10.53937/5
+b ˘ \C70/rm/m/n/10.53937/8f Ÿ \C70/rm/m/n/10.53937/4e õ \C70/rm/m/n/10.53937/8f
+ π \C70/rm/m/n/10.53937/75 L \C70/rm/m/n/10.53937/8b ° \C70/rm/m/n/10.53937/7b 
+ó\OT1/cmr/m/n/10.53937 rk=qk/pk|\C70/rm/m/n/10.53937/ff ^^L| \OT1/cmr/m/n/10.53
+937 u1\C70/rm/m/n/10.53937/53 ÷\OT1/cmr/m/n/10.53937 0\C70/rm/m/n/10.53937/54 å
+
+ []
+
+<x7.png, id=364, 602.25pt x 475.7775pt>
+File: x7.png Graphic file (type png)
+<use x7.png>
+Package pdftex.def Info: x7.png  used on input line 344.
+(pdftex.def)             Requested size: 170.71652pt x 134.86475pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 344--344
+ [][] 
+ []
+
+<x8.png, id=365, 603.0028pt x 475.02469pt>
+File: x8.png Graphic file (type png)
+<use x8.png>
+Package pdftex.def Info: x8.png  used on input line 351.
+(pdftex.def)             Requested size: 170.71652pt x 134.48465pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 351--351
+ [][] 
+ []
+
+[10 <./x7.png> <./x8.png>]
+<x9.png, id=383, 601.4972pt x 475.7775pt>
+File: x9.png Graphic file (type png)
+<use x9.png>
+Package pdftex.def Info: x9.png  used on input line 376.
+(pdftex.def)             Requested size: 170.71652pt x 135.03172pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 376--376
+ [][] 
+ []
+
+<x10.png, id=384, 604.50844pt x 476.53032pt>
+File: x10.png Graphic file (type png)
+<use x10.png>
+Package pdftex.def Info: x10.png  used on input line 383.
+(pdftex.def)             Requested size: 170.71652pt x 134.56917pt.
+
+Overfull \hbox (24.82248pt too wide) in paragraph at lines 383--383
+ [][] 
+ []
+
+
+Overfull \hbox (11.03616pt too wide) in paragraph at lines 393--394
+\C70/rm/m/n/10.53937/5b å \C70/rm/m/n/10.53937/62 ^^P \C70/rm/m/n/10.53937/56 ˛
+ \C70/rm/m/n/10.53937/51 C \C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/66 > 
+\C70/rm/m/n/10.53937/79 :|\C70/rm/m/n/10.53937/ff ^^L| \C70/rm/m/n/10.53937/56 
+˛ \C70/rm/m/n/10.53937/51 C \C70/rm/m/n/10.53937/57 ( \C70/rm/m/n/10.53937/67 :
+ \C70/rm/m/n/10.53937/56 h \C70/rm/m/n/10.53937/4e 
+ \C70/rm/m/n/10.53937/5b X \C70/rm/m/n/10.53937/50 ® \C70/rm/m/n/10.53937/57 ( 
+\C70/rm/m/n/10.53937/4e ^^@ *\OT1/cmr/m/n/10.53937 QVector\C70/rm/m/n/10.53937/
+4e -|\C70/rm/m/n/10.53937/ff ^^L| \OT1/cmr/m/n/10.53937 Vector\C70/rm/m/n/10.53
+937/91 « \C70/rm/m/n/10.53937/75 ( \C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.539
+37/6a ! \C70/rm/m/n/10.53937/67 ^^? \C70/rm/m/n/10.53937/66 / \C70/rm/m/n/10.53
+937/81 Í \C70/rm/m/n/10.53937/5b ö \C70/rm/m/n/10.53937/4e I \C70/rm/m/n/10.539
+37/76 Ñ\OT1/cmr/m/n/10.53937 Point\C70/rm/m/n/10.53937/7c {
+ []
+
+
+Overfull \hbox (19.19244pt too wide) in paragraph at lines 395--396
+[]\C70/rm/m/n/10.53937/56 ˛ \C70/rm/m/n/10.53937/51 C \C70/rm/m/n/10.53937/7e ÿ
+ \C70/rm/m/n/10.53937/52 6 \C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/57 ˙ 
+\C70/rm/m/n/10.53937/67 , \C70/rm/m/n/10.53937/51 ˝ \C70/rm/m/n/10.53937/65 p \
+C70/rm/m/n/10.53937/52 ^^Y \C70/rm/m/n/10.53937/66 / \C70/rm/m/n/10.53937/70 π 
+\C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/7e ÿ \C70/rm/m/n/10.53937/52 6|\
+C70/rm/m/n/10.53937/ff ^^L| \C70/rm/m/n/10.53937/6c Ë \C70/rm/m/n/10.53937/61 ^
+^O \C70/rm/m/n/10.53937/57 ( \C70/rm/m/n/10.53937/8f Ÿ \C70/rm/m/n/10.53937/91 
+Ã \C70/rm/m/n/10.53937/7e ÿ \C70/rm/m/n/10.53937/52 6 \C70/rm/m/n/10.53937/63 ^
+^G \C70/rm/m/n/10.53937/76 Ñ \C70/rm/m/n/10.53937/66 / \C70/rm/m/n/10.53937/5c 
+^^F\OT1/cmr/m/n/10.53937 Point\C70/rm/m/n/10.53937/5b ˘ \C70/rm/m/n/10.53937/8c
+ a \C70/rm/m/n/10.53937/5b X \C70/rm/m/n/10.53937/50 ® \C70/rm/m/n/10.53937/52 
+0\OT1/cmr/m/n/10.53937 QVector\C70/rm/m/n/10.53937/4e -|\C70/rm/m/n/10.53937/30
+ ^^B|
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 399.
+[11 <./x9.png> <./x10.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 399.
  (./171850505_10ÊúàÊä•Âëä.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 202.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 202.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 399.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 399.
+Package rerunfilecheck Info: File `171850505_10ÊúàÊä•Âëä.out' has not changed.
+(rerunfilecheck)             Checksum: D791DF4C6B69504A79636ACE9114B8F2;2077.
 
 
-Package rerunfilecheck Warning: File `171850505_10ÊúàÊä•Âëä.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: Checksums for `171850505_10ÊúàÊä•Âëä.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  F2C92A1764FE6F657E4FFF3A5DD37994;1311.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 202.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 399.
  ) 
 Here is how much of TeX's memory you used:
- 26885 strings out of 492167
- 443949 string characters out of 6129158
- 738607 words of memory out of 5000000
- 30672 multiletter control sequences out of 15000+600000
- 572864 words of font info for 176 fonts, out of 8000000 for 9000
+ 27187 strings out of 492167
+ 449074 string characters out of 6129158
+ 496851 words of memory out of 5000000
+ 30922 multiletter control sequences out of 15000+600000
+ 579585 words of font info for 201 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,8n,67p,593b,1957s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/s
-imsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows
-/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:
-/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun
-.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Font
-s/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Wind
+ 45i,10n,67p,860b,394s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/s
+imsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows
+/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:
+/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei
+.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Font
+s/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Wind
 ows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc>
-<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/sim
-sun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/F
-onts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/W
-indows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.t
-tc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/
-simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Window
-s/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c
-:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhe
-i.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fon
+<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/sim
+hei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/F
+onts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/W
+indows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.t
+tf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/
+simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Window
+s/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c
+:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsu
+n.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fon
 ts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Win
 dows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc
-><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/si
-msun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/
-Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/
+><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/si
+mhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/
+Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/
 Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.
 ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts
 /simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windo
 ws/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><
 c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/sims
 un.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fo
-nts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Wi
+nts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Wi
 ndows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.tt
 c><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/s
-imsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows
-/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:
-/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei
-.ttf><c:/Windows/Fonts/simhei.ttf><c:/texlive/2019/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmbx10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx12.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex
-10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c
-:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/
-2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2019/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2019/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2019/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr9.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb>
-Output written on 171850505_10ÊúàÊä•Âëä.pdf (5 pages, 496456 bytes).
+imsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows
+/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:
+/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei
+.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Font
+s/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Wind
+ows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf>
+<c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/sim
+hei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/F
+onts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/t
+exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/20
+19/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2019/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2019/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r12.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:
+/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/
+2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on 171850505_10ÊúàÊä•Âëä.pdf (11 pages, 937000 bytes).
 PDF statistics:
- 601 PDF objects out of 1000 (max. 8388607)
- 425 compressed objects within 5 object streams
- 88 named destinations out of 1000 (max. 500000)
- 253 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 772 PDF objects out of 1000 (max. 8388607)
+ 533 compressed objects within 6 object streams
+ 74 named destinations out of 1000 (max. 500000)
+ 547 words of extra memory for PDF output out of 10000 (max. 10000000)
 
